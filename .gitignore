@@ -1,0 +1,10 @@
+# Maven generated files
+target/
+dependency-reduced-pom.xml
+
+# IntelliJ IDEA
+.idea
+*.iml
+
+# Libraries
+lib
