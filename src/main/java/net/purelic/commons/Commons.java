@@ -269,7 +269,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
         this.register(new HeadCommand());
         this.register(new KickCommand());
         this.register(new OpCommand());
-        this.register(new ShutdownCommand()); // TODO should I make this owner only...?
+        this.register(new ShutdownCommand());
         this.register(new UnbanCommand());
 
         // Player Commands
