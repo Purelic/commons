@@ -55,6 +55,10 @@ public class ServerUtils {
         serverNameCache = name;
     }
 
+    public static void setPrivate(boolean isPrivate) {
+        isPrivateCached = isPrivate;
+    }
+
     public static boolean isPrivate() {
         if (isPrivateCached) return isPrivate;
         isPrivate = (boolean) get("private", isPrivate);
