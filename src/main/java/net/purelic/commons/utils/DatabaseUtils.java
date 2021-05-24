@@ -81,7 +81,8 @@ public class DatabaseUtils {
             } else {
                 if (name == null) return null;
 
-                Profile profile = Commons.addProfile(uuid, new Profile());
+                Profile profile = Commons.addProfile(uuid, new Profile(now));
+
                 Map<String, Object> data = new HashMap<>();
                 data.put("joined", now);
                 data.put("last_seen", now);
@@ -89,6 +90,7 @@ public class DatabaseUtils {
                 data.put("name", name);
                 data.put("name_lower", name.toLowerCase());
                 docRef.set(data);
+
                 Commons.callEvent(new ProfileLoadedEvent(uuid, profile, document, true));
             }
 

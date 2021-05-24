@@ -6,7 +6,10 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.purelic.commons.utils.*;
+import net.purelic.commons.utils.CommandUtils;
+import net.purelic.commons.utils.DatabaseUtils;
+import net.purelic.commons.utils.NickUtils;
+import net.purelic.commons.utils.ServerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -31,7 +34,9 @@ public class Profile {
     private String nameLower;
     private long timePlayed;
 
-    public Profile() {
+    public Profile(Timestamp now) {
+        this.joined = now;
+        this.lastSeen = now;
         this.ranks = new ArrayList<>();
         this.preferences = new HashMap<>();
         this.stats = new HashMap<>();
