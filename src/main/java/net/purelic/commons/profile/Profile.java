@@ -34,9 +34,7 @@ public class Profile {
     private String nameLower;
     private long timePlayed;
 
-    public Profile(Timestamp now) {
-        this.joined = now;
-        this.lastSeen = now;
+    public Profile() {
         this.ranks = new ArrayList<>();
         this.preferences = new HashMap<>();
         this.stats = new HashMap<>();

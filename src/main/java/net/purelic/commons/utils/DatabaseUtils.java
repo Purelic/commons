@@ -81,7 +81,9 @@ public class DatabaseUtils {
             } else {
                 if (name == null) return null;
 
-                Profile profile = Commons.addProfile(uuid, new Profile(now));
+                Profile profile = Commons.addProfile(uuid, new Profile());
+                profile.setJoined(now);
+                profile.setLastSeen(now);
 
                 Map<String, Object> data = new HashMap<>();
                 data.put("joined", now);
