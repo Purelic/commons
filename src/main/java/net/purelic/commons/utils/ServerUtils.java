@@ -56,7 +56,8 @@ public class ServerUtils {
     }
 
     public static void setPrivate(boolean isPrivate) {
-        isPrivateCached = isPrivate;
+        isPrivateCached = true;
+        ServerUtils.isPrivate = isPrivate;
     }
 
     public static boolean isPrivate() {
