@@ -38,7 +38,7 @@ public class PlayerViolationCommand implements Listener {
         }
 
         for (Player online : Bukkit.getOnlinePlayers()) {
-            Profile profile = Commons.getProfile(player);
+            Profile profile = Commons.getProfile(online);
 
             if (!profile.isMod()) continue;
 
