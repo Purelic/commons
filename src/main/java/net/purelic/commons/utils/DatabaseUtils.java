@@ -84,6 +84,8 @@ public class DatabaseUtils {
                 Profile profile = Commons.addProfile(uuid, new Profile());
                 profile.setJoined(now);
                 profile.setLastSeen(now);
+                profile.setName(name);
+                profile.setNameLower(name.toLowerCase());
 
                 Map<String, Object> data = new HashMap<>();
                 data.put("joined", now);
