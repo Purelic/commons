@@ -230,20 +230,7 @@ public class DatabaseUtils {
     }
 
     public static void updateGameMode(String id, Map<String, Object> data) {
-        DocumentReference docRef = database.collection("game_modes").document(id);
-        ApiFuture<DocumentSnapshot> future = docRef.get();
-        DocumentSnapshot snapshot = null;
-
-        try {
-            snapshot = future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        if (snapshot == null) return;
-
-        data.put("downloads", snapshot.get("downloads"));
-        docRef.set(data);
+        database.collection("game_modes").document(id).set(data);
     }
 
     public static void deleteGameMode(String id) {
