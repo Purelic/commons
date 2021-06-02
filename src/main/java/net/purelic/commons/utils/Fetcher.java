@@ -25,6 +25,8 @@ import java.util.UUID;
 
 public class Fetcher {
 
+    public static final UUID PURELIC_UUID = UUID.fromString("57014d5f-1d26-4986-832b-a0e7a4e41088");
+
     private static final Map<UUID, String> CACHED_NAMES = new HashMap<>();
     private static final Map<String, String> CACHED_NAMES_KEYS = new HashMap<>();
     private static final Map<String, UUID> CACHED_UUIDS = new HashMap<>();
