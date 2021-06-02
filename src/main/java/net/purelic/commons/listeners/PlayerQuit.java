@@ -31,7 +31,7 @@ public class PlayerQuit implements Listener {
 
         DatabaseUtils.updateLastSeen(player);
         DatabaseUtils.updatePlayerCount(Bukkit.getOnlinePlayers().size() - 1);
-        PermissionUtils.setPermissions(player);
+        PermissionUtils.removeAllPermissions(player);
         Commons.removeProfile(player);
 
         if (Bukkit.getOnlinePlayers().size() == 1 && Commons.idleTimer > 0) {
