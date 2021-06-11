@@ -2,13 +2,19 @@ package net.purelic.commons.utils;
 
 public class LunarUtils {
 
-    public static boolean isLoaded() {
+    private static boolean isLoaded;
+
+    static {
         try {
             Class.forName("com.lunarclient.bukkitapi.LunarClientAPI");
-            return true;
+            isLoaded = true;
         } catch (ClassNotFoundException e) {
-            return false;
+            isLoaded = false;
         }
+    }
+
+    public static boolean isLoaded(){
+        return isLoaded;
     }
 
 }
