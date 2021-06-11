@@ -1,7 +1,7 @@
 package net.purelic.commons.utils;
 
+import com.viaversion.viaversion.api.Via;
 import org.bukkit.entity.Player;
-import us.myles.ViaVersion.api.Via;
 
 public class VersionUtils {
 
