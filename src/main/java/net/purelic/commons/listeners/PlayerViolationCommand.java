@@ -55,7 +55,7 @@ public class PlayerViolationCommand implements Listener {
     }
 
     private ViolationCategory getViolationCategory(String command) {
-        return ViolationCategory.valueOf(command.split("do")[2].trim());
+        return ViolationCategory.valueOf(command.split(" do ")[2].trim());
     }
 
     private String formatHackType(Enums.HackType hackType) {
