@@ -81,8 +81,14 @@ public class NickUtils {
     }
 
     public static Player getNickedPlayer(String nick) {
+        // Attempt to get a player by matching their nick exactly
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (getNick(player).equalsIgnoreCase(nick)) return player;
+        }
+
+        // Attempt to find a player that starts with the provided nick
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (getNick(player).toLowerCase().startsWith(nick.toLowerCase())) return player;
         }
 
         return null;
