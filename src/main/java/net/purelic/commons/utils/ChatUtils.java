@@ -105,7 +105,7 @@ public class ChatUtils {
     }
 
     public static void sendTitle(Player player, String title, String subtitle, int fadeIn, int duration, int fadeOut) {
-        if (VersionUtils.isLegacy(player)) {
+        if (VersionUtils.isLegacy(player) && LunarUtils.isLoaded()) {
             LunarClientAPI.getInstance().sendTitle(
                 player,
                 TitleType.TITLE,
