@@ -1,6 +1,8 @@
 package net.purelic.commons.utils;
 
 import com.google.cloud.Timestamp;
+import com.lunarclient.bukkitapi.LunarClientAPI;
+import com.lunarclient.bukkitapi.object.TitleType;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
@@ -14,8 +16,10 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.github.paperspigot.Title;
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -90,6 +94,44 @@ public class ChatUtils {
 
     public static void clearActionBarAll(Player player) {
         broadcastActionBar("");
+    }
+
+    public static void sendTitle(Player player, String title, String subtitle) {
+        sendTitle(player, title, subtitle, 40);
+    }
+
+    public static void sendTitle(Player player, String title, String subtitle, int duration) {
+        sendTitle(player, title, subtitle, 5, duration, 5);
+    }
+
+    public static void sendTitle(Player player, String title, String subtitle, int fadeIn, int duration, int fadeOut) {
+        if (VersionUtils.isLegacy(player) && LunarUtils.isLoaded()) {
+            LunarClientAPI.getInstance().sendTitle(
+                player,
+                TitleType.TITLE,
+                title,
+                1F, // scale
+                Duration.ofMillis(fadeIn * 50L),
+                Duration.ofMillis(duration * 50L),
+                Duration.ofMillis(fadeOut * 50L)
+            );
+
+            LunarClientAPI.getInstance().sendTitle(
+                player,
+                TitleType.SUBTITLE,
+                subtitle,
+                1F, // scale
+                Duration.ofMillis(fadeIn * 50L),
+                Duration.ofMillis(duration * 50L),
+                Duration.ofMillis(fadeOut * 50L)
+            );
+        } else {
+            player.sendTitle(new Title(
+                new TextComponent(title),
+                new TextComponent(subtitle),
+                fadeIn, duration, fadeOut
+            ));
+        }
     }
 
     public static void sendFancyChatMessage(Player player, String message) {
