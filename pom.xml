@@ -65,10 +65,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.lunarclient</groupId>
-            <artifactId>client-api</artifactId>
+            <groupId>com.lunarclient.bukkitapi.LunarClientAPI</groupId>
+            <artifactId>LunarClientAPI</artifactId>
             <version>1.0</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/LunarClientAPI.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>me.vagdedes</groupId>
