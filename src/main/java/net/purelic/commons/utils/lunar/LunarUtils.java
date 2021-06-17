@@ -1,4 +1,4 @@
-package net.purelic.commons.utils;
+package net.purelic.commons.utils.lunar;
 
 public class LunarUtils {
 
