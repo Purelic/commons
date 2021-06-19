@@ -73,7 +73,11 @@ public class ChatUtils {
     }
 
     public static void broadcastActionBar(String message) {
-        Bukkit.getOnlinePlayers().forEach(player -> sendActionBar(player, message));
+        broadcastActionBar(message, false);
+    }
+
+    public static void broadcastActionBar(String message, boolean includeLegacy) {
+        Bukkit.getOnlinePlayers().forEach(player -> sendActionBar(player, message, includeLegacy));
     }
 
     public static void sendActionBar(Player player, String message) {
@@ -93,7 +97,7 @@ public class ChatUtils {
         sendActionBar(player, "");
     }
 
-    public static void clearActionBarAll(Player player) {
+    public static void clearActionBarAll() {
         broadcastActionBar("");
     }
 
