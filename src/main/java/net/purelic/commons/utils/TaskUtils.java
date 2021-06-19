@@ -27,9 +27,17 @@ public class TaskUtils {
         else return Bukkit.getScheduler().runTask(Commons.getPlugin(), runnable);
     }
 
+    public static BukkitTask runTimerAsync(Runnable runnable, long interval) {
+        return runTimerAsync(runnable, 0, interval);
+    }
+
     public static BukkitTask runTimerAsync(Runnable runnable, long delay, long interval) {
         if (runnable instanceof BukkitRunnable) return ((BukkitRunnable) runnable).runTaskTimerAsynchronously(Commons.getPlugin(), delay, interval);
         else return Bukkit.getScheduler().runTaskTimerAsynchronously(Commons.getPlugin(), runnable, delay, interval);
+    }
+
+    public static BukkitTask runTimer(Runnable runnable, long interval) {
+        return runTimer(runnable, 0, interval);
     }
 
     public static BukkitTask runTimer(Runnable runnable, long delay, long interval) {
