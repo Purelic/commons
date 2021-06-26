@@ -101,6 +101,22 @@ public class ChatUtils {
         broadcastActionBar("");
     }
 
+    public static void broadcastTitle(String title) {
+        broadcastTitle(title, "");
+    }
+
+    public static void broadcastTitle(String title, String subtitle) {
+        for (Player player : Bukkit.getOnlinePlayers()) sendTitle(player, title, subtitle);
+    }
+
+    public static void broadcastTitle(String title, String subtitle, int duration) {
+        for (Player player : Bukkit.getOnlinePlayers()) sendTitle(player, title, subtitle, duration);
+    }
+
+    public static void sendTitle(Player player, String title) {
+        sendTitle(player, title, "");
+    }
+
     public static void sendTitle(Player player, String title, String subtitle) {
         sendTitle(player, title, subtitle, 40);
     }
