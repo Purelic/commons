@@ -28,17 +28,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: download BuildTools and build CraftBukkit
-        run: |
-          cd ~/work/commons/commons/src
-          mkdir lib
-          cd lib
-          curl -o BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
-          java -jar BuildTools.jar --rev 1.8.8
-      - name: download SpartanAPI
-        run: |
-          cd ~/work/commons/commons/src/lib
-          curl -o SpartanAPI.jar https://vagdedes.com/spartan/api/SpartanAPI.jar
       - name: deploy to ossrh/maven central
         run: mvn clean deploy
         env:

@@ -6,7 +6,13 @@
 
     <groupId>net.purelic</groupId>
     <artifactId>commons</artifactId>
+    <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
+    <modules>
+        <module>commons-api</module>
+        <module>core</module>
+        <module>gaming</module>
+    </modules>
 
     <name>Commons</name>
     <description>Code used on the server-level across multiple places in the PuRelic ecosystem</description>
@@ -50,159 +56,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-netty-shaded</artifactId>
-            <version>1.32.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-protobuf</artifactId>
-            <version>1.32.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-stub</artifactId>
-            <version>1.32.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>annotations-api</artifactId>
-            <version>6.0.53</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.firebase</groupId>
-            <artifactId>firebase-admin</artifactId>
-            <version>7.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.github.paperspigot</groupId>
-            <artifactId>paperspigot-api</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>1.8.8-R3</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/libs/craftbukkit-1.8.8-R3.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.lunarclient.bukkitapi.LunarClientAPI</groupId>
-            <artifactId>LunarClientAPI</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/libs/LunarClientAPI.jar</systemPath>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>me.vagdedes</groupId>
-            <artifactId>spartan</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/libs/SpartanAPI.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>cloud.commandframework</groupId>
-            <artifactId>cloud-paper</artifactId>
-            <version>1.5.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.viaversion</groupId>
-            <artifactId>viaversion</artifactId>
-            <version>4.0.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.ocpsoft.prettytime</groupId>
-            <artifactId>prettytime</artifactId>
-            <version>4.0.5.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dropbox.core</groupId>
-            <artifactId>dropbox-core-sdk</artifactId>
-            <version>3.1.5</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-validator</groupId>
-            <artifactId>commons-validator</artifactId>
-            <version>1.7</version>
-        </dependency>
-        <dependency>
-            <groupId>com.rudderstack.sdk.java</groupId>
-            <artifactId>rudderanalytics-client</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-    </dependencies>
-
-    <repositories>
-        <repository>
-            <id>viaversion-repo</id>
-            <url>https://repo.viaversion.com</url>
-        </repository>
-        <repository>
-            <id>incendo-snapshots</id>
-            <url>https://repo.incendo.org/content/repositories/snapshots</url>
-        </repository>
-        <repository>
-            <id>papermc</id>
-            <url>https://papermc.io/repo/repository/maven-public/</url>
-        </repository>
-    </repositories>
-
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
