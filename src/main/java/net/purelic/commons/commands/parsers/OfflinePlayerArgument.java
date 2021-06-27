@@ -122,8 +122,6 @@ public final class OfflinePlayerArgument<C> extends CommandArgument<C, OfflinePl
 
     }
 
-
-    @SuppressWarnings("deprecation")
     public static final class OfflinePlayerParser<C> implements ArgumentParser<C, OfflinePlayer> {
 
         @Override
@@ -164,11 +162,11 @@ public final class OfflinePlayerArgument<C> extends CommandArgument<C, OfflinePl
 
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
 
-            if (offlinePlayer == null) {
-                return ArgumentParseResult.failure(new OfflinePlayerParseException(input, commandContext));
+            if (offlinePlayer != null) {
+                return ArgumentParseResult.success(offlinePlayer);
             }
 
-            return ArgumentParseResult.success(offlinePlayer);
+            return ArgumentParseResult.failure(new OfflinePlayerParseException(input, commandContext));
         }
 
         @Override

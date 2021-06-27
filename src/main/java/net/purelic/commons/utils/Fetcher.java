@@ -42,20 +42,27 @@ public class Fetcher {
         Player online = Bukkit.getPlayer(uuid);
         if (online != null) {
             String name = online.getName();
-            CACHED_NAMES.put(uuid, name);
-            CACHED_NAMES_KEYS.put(name.toLowerCase(), name);
-            CACHED_UUIDS.put(name, uuid);
+            cache(uuid, name);
             return name;
         }
 
         Map<String, Object> offlineProfile = DatabaseUtils.getOfflineProfile(uuid);
-        if (offlineProfile == null) return null;
+        if (offlineProfile != null) {
+            String name = (String) offlineProfile.get("name");
+            cache(uuid, name);
+            return name;
+        }
 
-        String name = (String) offlineProfile.get("name");
-        CACHED_NAMES.put(uuid, name);
-        CACHED_NAMES_KEYS.put(name.toLowerCase(), name);
-        CACHED_UUIDS.put(name, uuid);
-        return name;
+        try {
+            MinecraftUser user = getMinecraftUser(uuid);
+            String name = user.getName();
+            cacheMinecraftUser(user);
+            cache(user.getId(), name);
+            return name;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static String getNameOf(String name) {
@@ -67,6 +74,12 @@ public class Fetcher {
         return getNameOf(offlinePlayer.getUniqueId());
     }
 
+    private static void cache(UUID uuid, String name) {
+        CACHED_NAMES.put(uuid, name);
+        CACHED_NAMES_KEYS.put(name.toLowerCase(), name);
+        CACHED_UUIDS.put(name, uuid);
+    }
+
     public static UUID getUUIDOf(String name) {
         if (CACHED_NAMES_KEYS.containsKey(name.toLowerCase()))
             return CACHED_UUIDS.get(CACHED_NAMES_KEYS.get(name.toLowerCase()));
@@ -75,21 +88,28 @@ public class Fetcher {
         if (online != null) {
             UUID uuid = online.getUniqueId();
             String formattedName = online.getName();
-            CACHED_NAMES.put(uuid, formattedName);
-            CACHED_NAMES_KEYS.put(formattedName.toLowerCase(), formattedName);
-            CACHED_UUIDS.put(formattedName, uuid);
+            cache(uuid, formattedName);
             return uuid;
         }
 
         Map<String, Object> offlineProfile = DatabaseUtils.getOfflineProfile(name);
-        if (offlineProfile == null) return null;
+        if (offlineProfile != null) {
+            String formattedName = (String) offlineProfile.get("name");
+            UUID uuid = UUID.fromString((String) offlineProfile.get("uuid"));
+            cache(uuid, formattedName);
+            return uuid;
+        }
 
-        String formattedName = (String) offlineProfile.get("name");
-        UUID uuid = UUID.fromString((String) offlineProfile.get("uuid"));
-        CACHED_NAMES.put(uuid, formattedName);
-        CACHED_NAMES_KEYS.put(formattedName.toLowerCase(), formattedName);
-        CACHED_UUIDS.put(formattedName, uuid);
-        return uuid;
+        try {
+            MinecraftUser user = getMinecraftUser(name);
+            UUID uuid = user.getId();
+            cacheMinecraftUser(user);
+            cache(uuid, user.getName());
+            return uuid;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static TextComponent getFancyName(Profile profile) {
@@ -119,10 +139,13 @@ public class Fetcher {
     @SuppressWarnings("deprecation")
     public static TextComponent getFancyName(UUID uuid) {
         Player online = Bukkit.getPlayer(uuid);
+        Profile profile = Commons.getProfile(uuid);
+
+        if (profile == null) {
+            return new TextComponent(ChatColor.DARK_AQUA + getNameOf(uuid) + ChatColor.RESET);
+        }
 
         if (online == null || !online.isOnline()) {
-            Profile profile = Commons.getProfile(uuid);
-
             ComponentBuilder hover = new ComponentBuilder("Last Seen: ")
                 .color(ChatColor.GRAY)
                 .append(ChatUtils.format(profile.getLastSeen().toDate()))
@@ -135,7 +158,7 @@ public class Fetcher {
             return component;
         }
 
-        return Commons.getProfile(uuid).getFancyName(true);
+        return profile.getFancyName(true);
     }
 
     public static String getBasicName(Profile profile) {
@@ -152,13 +175,17 @@ public class Fetcher {
 
     public static String getBasicName(UUID uuid) {
         Player online = Bukkit.getPlayer(uuid);
+        Profile profile = Commons.getProfile(uuid);
+
+        if (profile == null) {
+            return ChatColor.DARK_AQUA + getNameOf(uuid) + ChatColor.RESET;
+        }
 
         if (online == null || !online.isOnline()) {
-            Profile profile = Commons.getProfile(uuid);
             return profile.getFlairs() + ChatColor.DARK_AQUA + getNameOf(uuid) + ChatColor.RESET;
         }
 
-        return Commons.getProfile(uuid).getFlairs() + NickUtils.getDisplayName(online) + ChatColor.RESET;
+        return profile.getFlairs() + NickUtils.getDisplayName(online) + ChatColor.RESET;
     }
 
     public static JsonObject getMinecraftUserObject(String identifier) throws IOException {
@@ -170,6 +197,7 @@ public class Fetcher {
     public static void cacheMinecraftUser(MinecraftUser user) {
         CACHED_MC_NAMES.put(user.getName(), user);
         CACHED_MC_UUIDS.put(user.getId(), user);
+        cache(user.getId(), user.getName());
     }
 
     public static MinecraftUser getMinecraftUser(String name) throws IOException {
