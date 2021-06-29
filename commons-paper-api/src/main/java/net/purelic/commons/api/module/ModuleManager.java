@@ -8,17 +8,37 @@ package net.purelic.commons.api.module;
 public interface ModuleManager {
     /**
      *
-     * @return
+     * @return this
      */
     ModuleManager basicScoreboard();
 
+    /**
+     *
+     * @return this
+     */
     ModuleManager blockPhysics();
 
+    /**
+     *
+     * @return this
+     */
     ModuleManager fancyChat();
 
+    /**
+     *
+     * @return this
+     */
     ModuleManager noHunger();
 
+    /**
+     *
+     * @return this
+     */
     ModuleManager noLeavesDecay();
 
+    /**
+     *
+     * @return this
+     */
     ModuleManager noPlayerDamage();
 }
