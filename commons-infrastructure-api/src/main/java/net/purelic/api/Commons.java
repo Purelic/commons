@@ -23,7 +23,7 @@ public interface Commons {
             Class<? extends Commons> clazz = null;
 
             try {
-                clazz = (Class<? extends Commons>) Class.forName("net.purelic.api.impl.Commons");
+                clazz = (Class<? extends Commons>) Class.forName("net.purelic.api.impl.CommonsImpl");
             } catch (ClassNotFoundException | ClassCastException e) {
                 throw new IllegalStateException("Fatal error when trying to retrieve the Commons impl", e);
             }
