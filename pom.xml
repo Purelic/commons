@@ -9,14 +9,15 @@
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
-        <module>commons-api</module>
-        <module>core</module>
-        <module>gaming</module>
+        <module>commons-infrastructure-api</module>
+        <module>commons-infrastructure</module>
+        <module>commons-paper-api</module>
+        <module>commons-paper</module>
     </modules>
 
     <name>Commons</name>
     <description>Code used on the server-level across multiple places in the PuRelic ecosystem</description>
-    <url>https://github.com/PuRelic/commons</url>
+    <url>https://github.com/PuRelic/paperCommons</url>
     <organization>
         <name>PuRelic</name>
         <url>https://purelic.net</url>
@@ -35,13 +36,13 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/PuRelic/commons.git</connection>
-        <developerConnection>scm:git:ssh://github.com/PuRelic/commons.git</developerConnection>
-        <url>https://github.com/PuRelic/commons</url>
+        <connection>scm:git:git://github.com/PuRelic/paperCommons.git</connection>
+        <developerConnection>scm:git:ssh://github.com/PuRelic/paperCommons.git</developerConnection>
+        <url>https://github.com/PuRelic/paperCommons</url>
     </scm>
     <issueManagement>
         <system>Github Issues</system>
-        <url>https://github.com/PuRelic/commons/issues</url>
+        <url>https://github.com/PuRelic/paperCommons/issues</url>
     </issueManagement>
     <distributionManagement>
         <snapshotRepository>
@@ -55,65 +56,5 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.SF</exclude>
-                                <exclude>META-INF/*.DSA</exclude>
-                                <exclude>META-INF/*.RSA</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
-                    <relocations>
-                        <relocation>
-                            <pattern>com.google</pattern>
-                            <shadedPattern>shaded.com.google</shadedPattern>
-                        </relocation>
-                    </relocations>
-                    <artifactSet>
-                        <includes>
-                            <include>com.fasterxml.jackson.core:*</include>
-                            <include>com.google.*:*</include>
-                            <include>cloud.commandframework:*</include>
-                            <include>io.leangen.geantyref:*</include>
-                            <include>io.grpc:*</include>
-                            <include>io.netty:*</include>
-                            <include>io.opencensus:*</include>
-                            <include>io.perfmark:*</include>
-                            <include>org.apache.*:*</include>
-                            <include>org.ocpsoft.prettytime:*</include>
-                            <include>org.slf4j:*</include>
-                            <include>org.threeten:*</include>
-                            <include>us.myles:*</include>
-                            <include>com.dropbox.core:*</include>
-                            <include>commons-validator:*</include>
-                            <include>com.rudderstack.sdk.java:*</include>
-                            <include>com.squareup.retrofit:*</include>
-                            <include>com.squareup.okhttp3:*</include>
-                            <include>com.squareup.okio:*</include>
-                            <include>com.jakewharton.retrofit:*</include>
-                        </includes>
-                    </artifactSet>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
