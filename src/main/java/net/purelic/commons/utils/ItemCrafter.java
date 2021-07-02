@@ -14,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.material.MaterialData;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class ItemCrafter {
     }
 
     public ItemCrafter setTag(String tag, int b) {
-        net.minecraft.server.v1_8_R3.ItemStack itemCopy = CraftItemStack.asNMSCopy(this.item);
+        net.minecraft.server.v1_8_R3.ItemStack itemCopy = this.getNMSItem();
         NBTTagCompound nbt = itemCopy.hasTag() ? itemCopy.getTag() : new NBTTagCompound();
         nbt.set(tag, new NBTTagByte((byte) b));
         itemCopy.setTag(nbt);
@@ -81,7 +82,7 @@ public class ItemCrafter {
     }
 
     public ItemCrafter setTag(String tag, String value) {
-        net.minecraft.server.v1_8_R3.ItemStack itemCopy = CraftItemStack.asNMSCopy(this.item);
+        net.minecraft.server.v1_8_R3.ItemStack itemCopy = this.getNMSItem();
         NBTTagCompound nbt = itemCopy.hasTag() ? itemCopy.getTag() : new NBTTagCompound();
         nbt.set(tag, new NBTTagString(value));
         itemCopy.setTag(nbt);
@@ -90,14 +91,14 @@ public class ItemCrafter {
     }
 
     public String getTag(String tag) {
-        net.minecraft.server.v1_8_R3.ItemStack itemCopy = CraftItemStack.asNMSCopy(this.item);
+        net.minecraft.server.v1_8_R3.ItemStack itemCopy = this.getNMSItem();
         if (itemCopy == null) return "";
         NBTTagCompound nbt = itemCopy.hasTag() ? itemCopy.getTag() : new NBTTagCompound();
         return nbt.getString(tag);
     }
 
     public ItemCrafter removeTag(String tag) {
-        net.minecraft.server.v1_8_R3.ItemStack itemCopy = CraftItemStack.asNMSCopy(this.item);
+        net.minecraft.server.v1_8_R3.ItemStack itemCopy = this.getNMSItem();
         NBTTagCompound nbt = itemCopy.hasTag() ? itemCopy.getTag() : new NBTTagCompound();
         nbt.remove(tag);
         itemCopy.setTag(nbt);
@@ -106,10 +107,31 @@ public class ItemCrafter {
     }
 
     public ItemCrafter clearTags() {
-        net.minecraft.server.v1_8_R3.ItemStack itemCopy = CraftItemStack.asNMSCopy(this.item);
+        net.minecraft.server.v1_8_R3.ItemStack itemCopy = this.getNMSItem();
         itemCopy.setTag(null);
         this.item = CraftItemStack.asBukkitCopy(itemCopy);
         return this;
+    }
+
+    private net.minecraft.server.v1_8_R3.ItemStack getNMSItem() {
+        try {
+            // use reflection to get the NMS item (to access NBT tags)
+            // this is surprisingly more efficient than cloning the CraftItemStack
+            CraftItemStack craftItemStack;
+
+            if (this.item instanceof CraftItemStack) {
+                craftItemStack = (CraftItemStack) this.item;
+            } else {
+                craftItemStack = CraftItemStack.asCraftCopy(this.item);
+            }
+
+            Field handle = craftItemStack.getClass().getDeclaredField("handle");
+            handle.setAccessible(true);
+            return (net.minecraft.server.v1_8_R3.ItemStack) handle.get(craftItemStack);
+        } catch (Exception e) {
+            // if there happen to be any issues with using reflection we can always fallback to the old method
+            return CraftItemStack.asNMSCopy(this.item);
+        }
     }
 
     public boolean hasTag(String tag) {
