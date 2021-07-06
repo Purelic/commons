@@ -5,25 +5,50 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.purelic</groupId>
-    <artifactId>Commons</artifactId>
-    <version>1.0</version>
+    <artifactId>commons</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <name>Commons</name>
+    <description>Code used on the server-level across multiple places in the PuRelic ecosystem</description>
+    <url>https://github.com/PuRelic/commons</url>
+    <organization>
+        <name>PuRelic</name>
+        <url>https://purelic.net</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>GPL-3.0-only</name>
+            <url>https://opensource.org/licenses/GPL-3.0</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <organization>PuRelic</organization>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/PuRelic/commons.git</connection>
+        <developerConnection>scm:git:ssh://github.com/PuRelic/commons.git</developerConnection>
+        <url>https://github.com/PuRelic/commons</url>
+    </scm>
+    <issueManagement>
+        <system>Github Issues</system>
+        <url>https://github.com/PuRelic/commons/issues</url>
+    </issueManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>viaversion-repo</id>
-            <url>https://repo.viaversion.com</url>
-        </repository>
-        <repository>
-            <id>incendo-snapshots</id>
-            <url>https://repo.incendo.org/content/repositories/snapshots</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
@@ -62,19 +87,23 @@
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
             <version>1.8.8-R3</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/libs/craftbukkit-1.8.8-R3.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.lunarclient.bukkitapi.LunarClientAPI</groupId>
             <artifactId>LunarClientAPI</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/LunarClientAPI.jar</systemPath>
+            <systemPath>${basedir}/src/libs/LunarClientAPI.jar</systemPath>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>me.vagdedes</groupId>
             <artifactId>spartan</artifactId>
             <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/libs/SpartanAPI.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>cloud.commandframework</groupId>
@@ -109,34 +138,71 @@
         </dependency>
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-netty-shaded</artifactId>
-                <version>1.32.1</version>
-            </dependency>
-            <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-protobuf</artifactId>
-                <version>1.32.1</version>
-            </dependency>
-            <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-stub</artifactId>
-                <version>1.32.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.tomcat</groupId>
-                <artifactId>annotations-api</artifactId>
-                <version>6.0.53</version>
-                <scope>provided</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <repositories>
+        <repository>
+            <id>viaversion-repo</id>
+            <url>https://repo.viaversion.com</url>
+        </repository>
+        <repository>
+            <id>incendo-snapshots</id>
+            <url>https://repo.incendo.org/content/repositories/snapshots</url>
+        </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -177,7 +243,6 @@
                             <include>io.opencensus:*</include>
                             <include>io.perfmark:*</include>
                             <include>org.apache.*:*</include>
-                            <include>org.bukkit:*</include>
                             <include>org.ocpsoft.prettytime:*</include>
                             <include>org.slf4j:*</include>
                             <include>org.threeten:*</include>
