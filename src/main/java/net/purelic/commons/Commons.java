@@ -15,6 +15,7 @@ import net.purelic.commons.commands.nick.ForceNickCommand;
 import net.purelic.commons.commands.nick.NickCommand;
 import net.purelic.commons.commands.nick.NicksCommand;
 import net.purelic.commons.commands.nick.UnnickCommand;
+import net.purelic.commons.commands.npc.NPCReloadCommand;
 import net.purelic.commons.commands.op.*;
 import net.purelic.commons.commands.parsers.CustomCommand;
 import net.purelic.commons.commands.player.MacroCommand;
@@ -24,9 +25,12 @@ import net.purelic.commons.commands.player.VersionCommand;
 import net.purelic.commons.commands.whitelist.*;
 import net.purelic.commons.events.CommonsReadyEvent;
 import net.purelic.commons.listeners.*;
+import net.purelic.commons.modules.NPCModule;
 import net.purelic.commons.profile.Profile;
 import net.purelic.commons.runnables.IdleTimer;
 import net.purelic.commons.utils.*;
+import net.purelic.commons.utils.packets.Hologram;
+import net.purelic.commons.utils.packets.NPC;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -45,6 +49,8 @@ import java.util.*;
 import java.util.function.Function;
 
 public class Commons extends JavaPlugin implements Listener, PluginMessageListener {
+
+    private static final String SPRING_MESSAGE_CHANNEL = "purelic:spring";
 
     private PaperCommandManager<CommandSender> commandManager;
 
@@ -68,8 +74,8 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
         cleanDirectory = config.getBoolean("clean_directory", true);
 
         // Register plugin channels
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "purelic:spring");
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "purelic:spring", this);
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, SPRING_MESSAGE_CHANNEL);
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, SPRING_MESSAGE_CHANNEL, this);
 
         // Register listeners and commands
         this.registerListeners();
@@ -262,6 +268,9 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
         this.register(new NicksCommand());
         this.register(new UnnickCommand());
 
+        // NPC Commands
+        this.register(new NPCReloadCommand());
+
         // OP Commands
         this.register(new AlertCommand());
         this.register(new BanCommand());
@@ -307,12 +316,12 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
             e.printStackTrace();
         }
 
-        player.sendPluginMessage(plugin, "purelic:spring", stream.toByteArray());
+        player.sendPluginMessage(plugin, SPRING_MESSAGE_CHANNEL, stream.toByteArray());
     }
 
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] bytes) {
-        if (!channel.equalsIgnoreCase("purelic:spring")) return;
+        if (!channel.equalsIgnoreCase(SPRING_MESSAGE_CHANNEL)) return;
 
         ByteArrayDataInput in = ByteStreams.newDataInput(bytes);
         String subChannel = in.readUTF();
@@ -364,6 +373,16 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
                 ChatUtils.getPrefix(partyName, "Party Chat", ChatColor.GOLD, ChatColor.WHITE),
                 audience
             );
+        } else if (subChannel.equals("UpdateNPC")) {
+            String id = in.readUTF();
+            String[] lines = in.readUTF().split("\n");
+            NPC npc = NPCModule.getNPC(id);
+
+            if (npc != null) {
+                Hologram hologram = npc.getHologram();
+                hologram.set(lines);
+                hologram.show();
+            }
         }
     }
 
