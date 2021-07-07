@@ -70,6 +70,7 @@ public class NPC extends YamlObject<NPCModifiers> {
 
     public void show(Player player) {
         this.entity.show(player);
+        this.hologram.show(player);
     }
 
     public void remove() {
