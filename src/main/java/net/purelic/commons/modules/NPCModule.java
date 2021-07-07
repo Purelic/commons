@@ -4,6 +4,7 @@ import io.netty.channel.*;
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
 import net.purelic.commons.Commons;
 import net.purelic.commons.events.NPCInteractEvent;
+import net.purelic.commons.utils.TaskUtils;
 import net.purelic.commons.utils.packets.Hologram;
 import net.purelic.commons.utils.packets.NPC;
 import net.purelic.commons.utils.packets.constants.NPCInteractAction;
@@ -91,8 +92,12 @@ public class NPCModule implements Module {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         this.injectPlayer(player);
-        for (NPC npc : NPCS.values()) npc.show(player);
-        for (Hologram hologram : HOLOGRAMS) hologram.show(player);
+
+        // Adding a slight delay after joining helps with npcs and holograms not showing consistently
+        TaskUtils.runLaterAsync(() -> {
+            for (NPC npc : NPCS.values()) npc.show(player);
+            for (Hologram hologram : HOLOGRAMS) hologram.show(player);
+        }, 5L);
     }
 
     @EventHandler
