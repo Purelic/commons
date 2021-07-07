@@ -4,6 +4,7 @@ import net.purelic.commons.Commons;
 import net.purelic.commons.utils.Fetcher;
 import net.purelic.commons.utils.YamlObject;
 import net.purelic.commons.utils.packets.constants.NPCModifiers;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -19,6 +20,7 @@ public class NPC extends YamlObject<NPCModifiers> {
     private final double yaw;
     private final String skin;
     private final Hologram hologram;
+    private Location location;
     private FakePlayer entity;
 
     public NPC(Map<String, Object> yaml) {
@@ -58,17 +60,26 @@ public class NPC extends YamlObject<NPCModifiers> {
     }
 
     public void create() {
-        Location location = new Location(Commons.getLobby(), this.x, this.y, this.z, Float.parseFloat(this.yaw + ""), 0F);
+        this.location = new Location(Commons.getLobby(), this.x, this.y, this.z, Float.parseFloat(this.yaw + ""), 0F);
 
-        try {
-            this.entity = new FakePlayer(location, "NPC", Fetcher.getMinecraftUser(this.skin).getSkin());
-            this.entity.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        // If no skin is set then we replicate the player's skin when we show the entity
+        if (this.skin != null) {
+            try {
+                this.entity = new FakePlayer(this.location, "NPC", Fetcher.getMinecraftUser(this.skin).getSkin());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+        Bukkit.getOnlinePlayers().forEach(this::show);
     }
 
     public void show(Player player) {
+        if (this.skin == null) {
+            if (this.entity == null) this.entity = new FakePlayer(this.location, "NPC", player);
+            else this.entity.setSkin(player);
+        }
+
         this.entity.show(player);
         this.hologram.show(player);
     }

@@ -1,6 +1,7 @@
 package net.purelic.commons.utils.packets;
 
 import com.mojang.authlib.properties.Property;
+import com.mojang.authlib.properties.PropertyMap;
 import net.minecraft.server.v1_8_R3.*;
 import net.purelic.commons.utils.TaskUtils;
 import org.bukkit.Bukkit;
@@ -21,8 +22,8 @@ public class FakePlayer {
         this(location, PacketUtils.getEntityPlayer(location, PacketUtils.getGameProfile(UUID.randomUUID(), name, skin)));
     }
 
-    public FakePlayer(Location location, String name, String skin, String signature) {
-        this(location, PacketUtils.getEntityPlayer(location, PacketUtils.getGameProfile(UUID.randomUUID(), name, skin, signature)));
+    public FakePlayer(Location location, String name, Player player) {
+        this(location, PacketUtils.getEntityPlayer(location, PacketUtils.getGameProfile(UUID.randomUUID(), name, player)));
     }
 
     public FakePlayer(Location location, EntityPlayer fakePlayer) {
@@ -68,8 +69,10 @@ public class FakePlayer {
         return this.entity.getId();
     }
 
-    public void show() {
-        Bukkit.getOnlinePlayers().forEach(this::show);
+    public void setSkin(Player player) {
+        PropertyMap pm = this.entity.getProfile().getProperties();
+        pm.remove("textures", pm.get("textures").iterator().next());
+        pm.put("textures", PacketUtils.getSkinProperty(player));
     }
 
     public void show(Player player) {

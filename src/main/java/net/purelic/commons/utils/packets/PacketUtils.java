@@ -35,14 +35,18 @@ public class PacketUtils {
     }
 
     public static GameProfile getGameProfile(UUID uuid, String name, Player player) {
-        Property property = ((CraftPlayer) player).getHandle().getProfile().getProperties().get("textures").iterator().next();
-        return getGameProfile(uuid, name, new Property("textures", property.getValue(), property.getSignature()));
+        return getGameProfile(uuid, name, getSkinProperty(player));
     }
 
     public static GameProfile getGameProfile(UUID uuid, String name, Property skin) {
         GameProfile profile = new GameProfile(uuid, name);
         profile.getProperties().put("textures", skin);
         return profile;
+    }
+
+    public static Property getSkinProperty(Player player) {
+        Property property = ((CraftPlayer) player).getHandle().getProfile().getProperties().get("textures").iterator().next();
+        return new Property("textures", property.getValue(), property.getSignature());
     }
 
     public static EntityArmorStand getArmorStand(Location location) {
