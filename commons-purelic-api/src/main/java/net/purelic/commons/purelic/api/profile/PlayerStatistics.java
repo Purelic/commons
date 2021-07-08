@@ -1,4 +1,4 @@
-package net.purelic.api.profile;
+package net.purelic.commons.purelic.api.profile;
 
 public interface PlayerStatistics {
 }

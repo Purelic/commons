@@ -1,6 +1,6 @@
-package net.purelic.api.discord;
+package net.purelic.commons.purelic.api.discord;
 
-import net.purelic.api.discord.embed.EmbedObject;
+import net.purelic.commons.purelic.api.discord.embed.EmbedObject;
 
 /**
  * Sends {@link EmbedObject}s to a {@link WebhookDestination}

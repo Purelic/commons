@@ -1,4 +1,4 @@
-package net.purelic.api.discord;
+package net.purelic.commons.purelic.api.discord;
 
 public enum WebhookDestination {
 

@@ -1,4 +1,4 @@
-package net.purelic.api.profile;
+package net.purelic.commons.purelic.api.profile;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

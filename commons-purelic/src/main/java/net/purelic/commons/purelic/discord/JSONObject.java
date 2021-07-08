@@ -1,4 +1,4 @@
-package net.purelic.api.impl.discord;
+package net.purelic.commons.purelic.discord;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;

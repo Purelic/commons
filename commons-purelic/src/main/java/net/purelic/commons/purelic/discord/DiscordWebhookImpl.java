@@ -1,13 +1,13 @@
-package net.purelic.api.impl.discord;
+package net.purelic.commons.purelic.discord;
 
-import net.purelic.api.discord.DiscordWebhook;
-import net.purelic.api.discord.WebhookDestination;
-import net.purelic.api.discord.embed.Author;
-import net.purelic.api.discord.embed.EmbedObject;
-import net.purelic.api.discord.embed.Field;
-import net.purelic.api.discord.embed.Footer;
-import net.purelic.api.discord.embed.Image;
-import net.purelic.api.discord.embed.Thumbnail;
+import net.purelic.commons.purelic.api.discord.DiscordWebhook;
+import net.purelic.commons.purelic.api.discord.WebhookDestination;
+import net.purelic.commons.purelic.api.discord.embed.Author;
+import net.purelic.commons.purelic.api.discord.embed.EmbedObject;
+import net.purelic.commons.purelic.api.discord.embed.Field;
+import net.purelic.commons.purelic.api.discord.embed.Footer;
+import net.purelic.commons.purelic.api.discord.embed.Image;
+import net.purelic.commons.purelic.api.discord.embed.Thumbnail;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.Color;
