@@ -49,7 +49,7 @@ public enum Protocol {
     private final String label;
 
     Protocol(Protocol protocol) {
-        this(protocol.value(), protocol.getFullLabel());
+        this(protocol.protocol, protocol.fullLabel);
     }
 
     Protocol(int protocol, String fullLabel) {
@@ -71,11 +71,15 @@ public enum Protocol {
         return this.label;
     }
 
+    public boolean isLegacy(){
+        return this.protocol < MINECRAFT_1_8.protocol;
+    }
+
     public static Protocol getProtocol(int version) {
         Protocol protocol = Protocol.MINECRAFT_LATEST;
 
-        for (Protocol p : Protocol.values()) {
-            if (p.value() <= version) protocol = p;
+        for (Protocol p : values()) {
+            if (p.protocol <= version) protocol = p;
             else break;
         }
 

@@ -1,6 +1,6 @@
 package net.purelic.api.discord.embed;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 public interface EmbedObject {

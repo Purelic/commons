@@ -19,7 +19,7 @@ public class VersionCommand implements CustomCommand {
 
     public static final Map<String, UUID> BANNED = new HashMap<>();
 
-    @Override
+    @Override //TODO version list? viaver list
     public Command.Builder<CommandSender> getCommandBuilder(BukkitCommandManager<CommandSender> mgr) {
         return mgr.commandBuilder("version", "ver")
             .senderType(Player.class)

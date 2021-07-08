@@ -7,7 +7,7 @@ public class VersionUtils {
 
     public static boolean isLegacy(Player player) {
         return VersionUtils.getProtocol(player).value() < VersionUtils.Protocol.MINECRAFT_1_8.value();
-    }
+    } //TODO: move this to protocol
 
     public static Protocol getProtocol(Player player) {
         return Protocol.getProtocol(Via.getAPI().getPlayerVersion(player.getUniqueId()));

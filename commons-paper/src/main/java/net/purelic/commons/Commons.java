@@ -7,8 +7,11 @@ import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+import com.viaversion.viaversion.bukkit.platform.BukkitViaAPI;
 import net.md_5.bungee.api.ChatColor;
 import net.purelic.commons.analytics.Analytics;
+import net.purelic.commons.api.PaperCommons;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.purelic.commons.commands.admin.DemoteCommand;
 import net.purelic.commons.commands.admin.PromoteCommand;
 import net.purelic.commons.commands.nick.ForceNickCommand;
@@ -59,6 +62,8 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
 
     @Override
     public void onEnable() {
+
+
         plugin = this;
         ready = false;
         profiles = new HashMap<>();
@@ -181,7 +186,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
         this.register(new WorldInit());
 
         try {
-            Class.forName("me.vagdedes.spartan.api.API");
+            Class.forName("me.vagdedes.spartan.api.API"); //TODO: acceptable to break here? consider dev env
             this.register(new PlayerViolationCommand(config));
         } catch (ClassNotFoundException e) {
             System.out.println("Spartan API not loaded");
@@ -200,7 +205,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
         final Function<CommandTree<CommandSender>, CommandExecutionCoordinator<CommandSender>> executionCoordinatorFunction =
             AsynchronousCommandExecutionCoordinator.<CommandSender>newBuilder().build();
 
-        final Function<CommandSender, CommandSender> mapperFunction = Function.identity();
+        final Function<CommandSender, CommandSender> mapperFunction = Function.identity(); //TODO: map to Purelative
 
         try {
             this.commandManager = new PaperCommandManager<>(

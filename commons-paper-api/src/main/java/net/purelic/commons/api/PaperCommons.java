@@ -1,10 +1,12 @@
 package net.purelic.commons.api;
 
-import net.purelic.commons.api.map.MapManager;
+import net.purelic.commons.api.chat.NaughtyMessageManager;
+import net.purelic.commons.api.command.CustomCommand;
 import net.purelic.commons.api.module.Modules;
 import net.purelic.commons.api.player.Purelative;
 import net.purelic.commons.api.task.PurelicTaskManager;
 import net.purelic.api.discord.DiscordWebhook;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,9 +21,21 @@ public interface PaperCommons extends Plugin { //TODO: complain when other neces
 
     Modules getModules();
 
-    MapManager getMapManager();
+    //MapManager getMapManager();
 
     PurelicTaskManager getTaskManager();
+
+    NaughtyMessageManager getMessageControl();
+
+    void register(Listener listener);
+
+    void unRegister(Listener listener);
+
+    void register(CustomCommand command);
+
+    void unRegister(CustomCommand command);
+
+    void sendSpringMessage(String subchannel, String... data); //TODO: figure out how to implement this in a friendl manner
 
     AtomicReference<PaperCommons> GLOBAL = new AtomicReference<>(null);
 
@@ -34,7 +48,7 @@ public interface PaperCommons extends Plugin { //TODO: complain when other neces
         }
     }
 
-    static PaperCommons get(){ //TODO: IMPORTANT!!! Fix DEPENDENCIES IN OTHER PLUGINS SO COMMONS IS ALWAYS LOADED FIRST
+    static @NotNull PaperCommons get(){ //TODO: IMPORTANT!!! Fix DEPENDENCIES IN OTHER PLUGINS SO COMMONS IS ALWAYS LOADED FIRST
         final PaperCommons paperCommons = GLOBAL.get();
         if(paperCommons == null){
             throw new IllegalStateException("Commons has not been initialized yet!");

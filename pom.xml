@@ -13,6 +13,7 @@
         <module>commons-infrastructure-api</module>
         <module>commons-paper-api</module>
         <module>commons-paper</module>
+        <module>game-api</module>
     </modules>
 
     <name>Commons</name>

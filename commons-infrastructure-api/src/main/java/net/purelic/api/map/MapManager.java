@@ -1,6 +1,4 @@
-package net.purelic.commons.api.map;
-
-import org.bukkit.World;
+package net.purelic.api.map;
 
 import java.util.List;
 import java.util.Map;
@@ -8,6 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface MapManager {
+
 
     //TODO: Map object instead of reference to folder name(merges file and yml)
 
@@ -25,17 +24,13 @@ public interface MapManager {
 
     Map<String, Object> getMapYaml(String map);
 
-    void saveDraft(World world, UUID uuid);
-
     void saveDraft(String map, UUID uuid);
 
     void publishMap(String map, UUID uuid);
 
     void pushMap(String map);
 
-    void deleteWorld(World world);
-
-    void deleteWorld(String world);
+    void deleteWorld(String world); //TODO: maybe this belongs somewhere else?
 
     void deleteMap(UUID uuid, String map, boolean published);
 

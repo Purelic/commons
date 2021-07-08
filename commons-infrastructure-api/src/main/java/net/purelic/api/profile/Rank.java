@@ -37,27 +37,25 @@ public enum Rank {
     public static final Component FANCY_OP_FLAIR = text(OP_FLAIR, OP_COLOR).hoverEvent(showText(text("Operator", OP_COLOR).append(newline()).append(text("Has op permissions on this server", NamedTextColor.GRAY))));
 
     private final Component name;
-    private final Component flair;
     private final NamedTextColor color;
     private final Component fancyFlair;
     private final @Nullable Rank childRank;
 
     Rank(String name, char flair, NamedTextColor color, String description, String page, @Nullable Rank childRank) {
         this.name = text(name);
-        this.flair = text(flair);
         this.color = color;
         this.fancyFlair =
-                this.flair
-                        .color(this.color)
+                text(flair, this.color)
                         .hoverEvent(
                                 showText(this.name.color(this.color)
                                         .append(newline())
                                         .append(text(description, NamedTextColor.GRAY))))
-                        .clickEvent(openUrl("https://purelic.net/" + page));
+                        .clickEvent(
+                                openUrl("https://purelic.net/" + page));
         this.childRank = childRank;
     }
 
-    Rank(String name, Character flair, NamedTextColor color, String description, String page) {
+    Rank(String name, char flair, NamedTextColor color, String description, String page) {
         this(name, flair, color, description, page, null);
     }
 
