@@ -1,4 +1,4 @@
-package net.purelic.commons.api;
+package net.purelic.commons.api.player;
 
 import net.purelic.api.profile.Protocol;
 

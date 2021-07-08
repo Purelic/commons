@@ -2,10 +2,10 @@ package net.purelic.commons.api.command;
 
 import cloud.commandframework.Command;
 import cloud.commandframework.CommandManager;
-import org.bukkit.command.CommandSender;
+import net.purelic.commons.api.player.Purelative;
 
 public interface CustomCommand { //TODO check how including cloud slows down build
 
-    Command.Builder<CommandSender> getCommandBuilder(CommandManager<CommandSender> commandManager);
+    Command.Builder<Purelative> getCommandBuilder(CommandManager<Purelative> commandManager);
 
 }

@@ -1,23 +1,28 @@
-package net.purelic.commons.api;
+package net.purelic.commons.api.player;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.ForwardingAudience;
-import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.purelic.api.profile.Protocol;
 import net.purelic.api.utils.component.PrefixComponent;
-import org.jetbrains.annotations.ApiStatus;
+import net.purelic.commons.api.player.Protocold;
 import org.jetbrains.annotations.NotNull;
 
 import static net.kyori.adventure.key.Key.key;
 import static net.kyori.adventure.sound.Sound.sound;
 import static net.kyori.adventure.text.Component.text;
 
-public interface PurelicPaperPlayerAudience extends Audience, Protocold {
+public interface PurelicPaperPlayerAudience extends Audience {
 
+    /**
+     * Classes implementing this that represents a group of players has to override this manually :(
+     * @param message
+     * @param includeLegacy
+     */
     default void sendActionBar(final @NotNull Component message, final boolean includeLegacy){
-        if(includeLegacy && this.getProtocol().value() >= 5) this.sendMessage(message);
+        if(includeLegacy && this instanceof Purelative && ((Purelative)this).getProtocol().isLegacy()) this.sendMessage(message);
         else this.sendActionBar(message);
     }
 

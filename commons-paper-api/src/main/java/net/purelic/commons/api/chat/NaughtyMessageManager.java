@@ -1,12 +1,9 @@
-package net.purelic.commons.api.text.chat;
+package net.purelic.commons.api.chat;
 
 import java.util.List;
 
 /**
  * Used to check messages for naughty words.
- *
- * <p>All messages sent through audience uses these checks, but all other displays of text has
- * to implement usage of this manually.</p>
  */
 public interface NaughtyMessageManager { //TODO: add access point
 
