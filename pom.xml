@@ -9,11 +9,12 @@
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
-        <module>commons-infrastructure</module>
-        <module>commons-infrastructure-api</module>
+        <module>commons-purelic</module>
+        <module>commons-purelic-api</module>
         <module>commons-paper-api</module>
         <module>commons-paper</module>
-        <module>game-api</module>
+        <module>commons-game-api</module>
+        <module>commons-game</module>
     </modules>
 
     <name>Commons</name>
