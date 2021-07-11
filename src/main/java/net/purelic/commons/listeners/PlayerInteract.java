@@ -1,5 +1,6 @@
 package net.purelic.commons.listeners;
 
+import net.purelic.commons.Commons;
 import net.purelic.commons.utils.CommandUtils;
 import net.purelic.commons.utils.ItemCrafter;
 import org.bukkit.Bukkit;
@@ -22,14 +23,18 @@ public class PlayerInteract implements Listener {
 
         ItemCrafter itemCrafter = new ItemCrafter(item);
 
-        if (!itemCrafter.hasTag("command")) return;
+        if (itemCrafter.hasTag("command")) {
 
-        String command = itemCrafter.getTag("command");
-        boolean opOnly = Boolean.parseBoolean(itemCrafter.getTag("op_only"));
+            String command = itemCrafter.getTag("command");
+            boolean opOnly = Boolean.parseBoolean(itemCrafter.getTag("op_only"));
 
-        if (opOnly && !op) return;
+            if (!opOnly || op) Bukkit.dispatchCommand(player, command);
+        }
 
-        Bukkit.dispatchCommand(player, command);
+        if (itemCrafter.hasTag("spring")) {
+            String channel = itemCrafter.getTag("command");
+            Commons.sendSpringMessage(player, channel);
+        }
     }
 
 }

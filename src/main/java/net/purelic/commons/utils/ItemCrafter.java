@@ -208,6 +208,12 @@ public class ItemCrafter {
         return this;
     }
 
+    // sends a plugin message to spring
+    public ItemCrafter spring(String channel) {
+        this.setTag("spring", channel);
+        return this;
+    }
+
     public ItemStack craft() {
         return this.item;
     }
