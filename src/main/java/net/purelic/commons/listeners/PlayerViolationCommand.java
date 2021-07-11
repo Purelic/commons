@@ -33,7 +33,7 @@ public class PlayerViolationCommand implements Listener {
 
         // Auto-Ban if we're certain the player is cheating
         if (category == ViolationCategory.Absolute) {
-            Commons.sendSpringMessage(player, "AutoBan", player.getUniqueId().toString(), "Hacking - " + hack);
+            Commons.sendSpringMessage(player, "AutoBan", "Hacking - " + hack);
             return;
         }
 

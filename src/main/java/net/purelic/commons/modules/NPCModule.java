@@ -82,7 +82,6 @@ public class NPCModule implements Module {
         Commons.sendSpringMessage(
             player,
             "NPCInteract",
-            player.getUniqueId().toString(),
             event.getNPC().getId(),
             event.getAction().name()
         );
