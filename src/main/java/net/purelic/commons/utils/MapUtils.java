@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class MapUtils {
 
     private static final List<String> RESERVED_MAP_NAMES = new ArrayList<>(Arrays.asList("lobby", "hub", "public"));
-    private static final List<String> SAVE_FOLDERS = new ArrayList<>(Arrays.asList("logs", "plugins", "cache", "world", "void", "world_nether", "world_the_end"));
+    private static final List<String> SAVE_FOLDERS = new ArrayList<>(Arrays.asList("logs", "plugins", "cache", "world", "void", "world_nether", "world_the_end", "crash-reports"));
 
     private static final String PLAYLIST_URL = "https://raw.githubusercontent.com/PuRelic/playlists/main/%PLAYLIST%.yml";
     private static final String REPO_PATH = "/Map Repository/Public";
