@@ -84,7 +84,7 @@ public class MapUtils {
     public static String downloadUHCMap() {
         String folder = "/Map Repository/UHC/";
         List<String> maps = listMaps(folder);
-        return downloadMap(maps.get(new Random().nextInt(maps.size())));
+        return downloadMap(folder + maps.get(new Random().nextInt(maps.size())) + ".zip");
     }
 
     private static String downloadMap(UUID uuid, String map, String folder) {
