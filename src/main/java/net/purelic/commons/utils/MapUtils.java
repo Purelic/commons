@@ -34,7 +34,7 @@ public class MapUtils {
     private static final String MAPS_PATH = ROOT + "Maps";
 
     private static DbxClientV2 DROPBOX;
-    private static Set<String> publicMapCache = new HashSet<>();
+    private static List<String> publicMapCache = new ArrayList<>();
 
     public static void connectDropbox(Configuration config) {
         DbxRequestConfig dbxRequestConfig = DbxRequestConfig.newBuilder("dropbox/java-tutorial").build();
@@ -49,7 +49,7 @@ public class MapUtils {
 
     public static List<String> downloadPublishedMaps(UUID uuid, Set<String> maps) {
         List<String> lower = maps.stream().map(String::toLowerCase).collect(Collectors.toList());
-        Set<String> publishedMaps = listPublishedMaps(uuid);
+        List<String> publishedMaps = listPublishedMaps(uuid);
         List<String> downloaded = new ArrayList<>();
 
         for (String map : publishedMaps) {
@@ -253,11 +253,11 @@ public class MapUtils {
         }
     }
 
-    public static Set<String> listDrafts(UUID uuid) {
+    public static List<String> listDrafts(UUID uuid) {
         return listMaps("/Map Repository/Private/" + uuid.toString() + "/Drafts");
     }
 
-    public static Set<String> listPublishedMaps(UUID uuid) {
+    public static List<String> listPublishedMaps(UUID uuid) {
         return listMaps("/Map Repository/Private/" + uuid.toString() + "/Published");
     }
 
@@ -269,7 +269,7 @@ public class MapUtils {
         return publicMapCache.stream().anyMatch(map -> map.equalsIgnoreCase(name));
     }
 
-    private static Set<String> listMaps(String path) {
+    private static List<String> listMaps(String path) {
         Set<String> maps = new TreeSet<>();
 
         try {
@@ -279,7 +279,7 @@ public class MapUtils {
             // Folder doesn't exist
         }
 
-        return maps;
+        return new ArrayList<>(maps);
     }
 
     public static String getDownloadLink(UUID uuid, String map) {
