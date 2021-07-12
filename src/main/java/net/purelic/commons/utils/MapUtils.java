@@ -199,6 +199,12 @@ public class MapUtils {
         }
     }
 
+    public static void saveUHCMap() {
+        String path = MAPS_PATH + "/UHC.zip";
+        String dest = "/Map Repository/UHC/" + UUID.randomUUID() + ".zip";
+        saveMap("UHC", path, dest);
+    }
+
     private static void saveMap(String map, UUID uuid, String folder) {
         String path = MAPS_PATH + "/" + map + ".zip";
         String dest = "/Map Repository/Private/" + uuid.toString() + "/" + folder + "/" + map + ".zip";
