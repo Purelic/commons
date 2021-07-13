@@ -32,7 +32,7 @@ public class PlayerInteract implements Listener {
         }
 
         if (itemCrafter.hasTag("spring")) {
-            String channel = itemCrafter.getTag("command");
+            String channel = itemCrafter.getTag("spring");
             Commons.sendSpringMessage(player, channel);
         }
     }
