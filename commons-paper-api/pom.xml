@@ -30,7 +30,7 @@
         </dependency>
         <dependency>
             <groupId>net.purelic</groupId>
-            <artifactId>commons-infrastructure-api</artifactId>
+            <artifactId>commons-purelic-api</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>

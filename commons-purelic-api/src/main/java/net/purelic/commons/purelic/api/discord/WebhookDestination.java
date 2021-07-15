@@ -2,7 +2,7 @@ package net.purelic.commons.purelic.api.discord;
 
 public enum WebhookDestination {
 
-    GUARDIAN(DiscordWebhook.BASE_URL, "Guardian", DiscordWebhook.AVATAR_URL),
+    GUARDIAN(DiscordWebhook.BASE_URL, "Guardian", DiscordWebhook.AVATAR_URL), //TODO: real urls, config
     SERVER_CREATE_ALERTS(DiscordWebhook.BASE_URL, "Alert", DiscordWebhook.AVATAR_URL);
 
     private final String webhookUrl;

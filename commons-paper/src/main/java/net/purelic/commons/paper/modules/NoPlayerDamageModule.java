@@ -3,16 +3,15 @@ package net.purelic.commons.paper.modules;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-public class NoPlayerDamageModule implements Module {
+public class NoPlayerDamageModule implements Listener {
 
-    private final boolean teleportVoidToSpawn;
+    public static final NoPlayerDamageModule INSTANCE = new NoPlayerDamageModule();
 
-    public NoPlayerDamageModule(boolean teleportVoidToSpawn) {
-        this.teleportVoidToSpawn = teleportVoidToSpawn;
-    }
+    private NoPlayerDamageModule(){}
 
     // Prevent players from taking damage
     @EventHandler
@@ -22,11 +21,6 @@ public class NoPlayerDamageModule implements Module {
         if (entity instanceof Player) {
             event.setCancelled(true);
             entity.setFireTicks(0);
-
-            // Teleport players to world spawn if they take void damage
-            if (this.teleportVoidToSpawn && event.getCause() == EntityDamageEvent.DamageCause.VOID) {
-                entity.teleport(entity.getWorld().getSpawnLocation());
-            }
         }
     }
 

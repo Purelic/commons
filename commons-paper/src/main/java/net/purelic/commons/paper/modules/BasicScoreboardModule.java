@@ -12,16 +12,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-public class BasicScoreboardModule implements Module {
+public class BasicScoreboardModule implements Listener {
+
+    public static final BasicScoreboardModule INSTANCE = new BasicScoreboardModule();
 
     private final Scoreboard board;
 
-    public BasicScoreboardModule() {
+    private BasicScoreboardModule() {
         this.board = Bukkit.getScoreboardManager().getNewScoreboard();
     }
 

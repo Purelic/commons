@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -17,7 +18,9 @@ public interface PaperCommons extends Plugin { //TODO: complain when other neces
 
     DiscordWebhook getDiscordWebhook();
 
-    Purelative getLicker(UUID uuid);
+    Purelative getPurelative(UUID uuid);
+
+    Collection<Purelative> getOnlinePurelatives();
 
     Modules getModules();
 
@@ -32,8 +35,6 @@ public interface PaperCommons extends Plugin { //TODO: complain when other neces
     void unRegister(Listener listener);
 
     void register(CustomCommand command);
-
-    void unRegister(CustomCommand command);
 
     void sendSpringMessage(String subchannel, String... data); //TODO: figure out how to implement this in a friendl manner
 

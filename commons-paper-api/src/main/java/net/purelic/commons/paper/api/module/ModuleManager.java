@@ -41,4 +41,10 @@ public interface ModuleManager {
      * @return this
      */
     ModuleManager noPlayerDamage();
+
+    /**
+     *
+     * @return this
+     */
+    ModuleManager teleportFromVoid();
 }

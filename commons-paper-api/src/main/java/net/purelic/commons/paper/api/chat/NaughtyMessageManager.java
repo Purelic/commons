@@ -1,5 +1,7 @@
 package net.purelic.commons.paper.api.chat;
 
+import net.kyori.adventure.text.Component;
+
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ public interface NaughtyMessageManager { //TODO: add access point
      * Checks if the message contain any blocked words from {@link #getBlockedWords()}
      * @return true if the message contains any blocked words, false if not
      */
-    boolean blockMessage(String message);
+    boolean blockMessage(Component message);
 
     /**
      * Gets all currently censored words
@@ -30,5 +32,5 @@ public interface NaughtyMessageManager { //TODO: add access point
      * @param message the message to check for censored words
      * @return the message input with "*" switched out for censored words
      */
-    String censorMessage(String message);
+    String censorMessage(Component message);
 }

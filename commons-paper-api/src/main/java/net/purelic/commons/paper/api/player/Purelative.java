@@ -4,9 +4,12 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.text.Component;
 import net.purelic.commons.purelic.api.profile.PlayerDatabaseProfile;
-import net.purelic.commons.purelic.api.profile.Protocol;
+import net.purelic.commons.purelic.api.utils.Protocol;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -16,15 +19,24 @@ import java.util.Date;
  */
 public interface Purelative extends PlayerDatabaseProfile, ForwardingAudience.Single, PurelicPaperPlayerAudience {
 
-    Player getBukkit();
+    /**
+     *
+     * @return true if and only if this player is online on the server this plugin is running on
+     */
+    boolean isOnline();
+
+    /**
+     *
+     * @return the wrapped player object only if {@link #isOnline()} is {@code true}, if {@link #isOnline()} is {@code false}
+     * {@code null} is returned.
+     */
+    @Nullable Player getBukkit();
 
     Date getInstantJoined();
 
     //List<GameMatch> recentMatches();
 
     String getSessionId();
-
-    String getNickname();
 
     long getTimePlayed();
 
@@ -33,11 +45,20 @@ public interface Purelative extends PlayerDatabaseProfile, ForwardingAudience.Si
     Protocol getProtocol();
 
     /**
-     * Send a fancy chat message FROM this player to {@code audience}
+     * Send a fancy chat message FROM this player to {@code recipient}
      * @param prefix the prefix to the message
      * @param message you know it
-     * @param audience the receiver of this message
+     * @param recipient the receivers of this message
      */
-    void sendFancyMessage(Component prefix, Component message, Audience audience);
+    void sendFancyMessage(Component prefix, Component message, Collection<Purelative> recipient);
 
+    /**
+     * Send a fancy chat message FROM this player to {@code recipient}
+     * @param prefix the prefix to the message
+     * @param message you know it
+     * @param recipient the receiver of this message
+     */
+    default void sendFancyMessage(Component prefix, Component message, Purelative recipient){
+        this.sendFancyMessage(prefix, message, Collections.singleton(recipient));
+    }
 }
