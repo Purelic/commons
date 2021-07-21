@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,7 +26,6 @@ public class PlayerInteract implements Listener {
         ItemCrafter itemCrafter = new ItemCrafter(item);
 
         if (itemCrafter.hasTag("command")) {
-
             String command = itemCrafter.getTag("command");
             boolean opOnly = Boolean.parseBoolean(itemCrafter.getTag("op_only"));
 
@@ -34,6 +35,41 @@ public class PlayerInteract implements Listener {
         if (itemCrafter.hasTag("spring")) {
             String channel = itemCrafter.getTag("spring");
             Commons.sendSpringMessage(player, channel);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        ItemStack item = event.getItemDrop().getItemStack();
+        ItemCrafter itemCrafter = new ItemCrafter(item);
+
+        if (itemCrafter.hasTag("command")
+            || itemCrafter.hasTag("spring")
+            || itemCrafter.hasTag("gui")) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        boolean op = CommandUtils.isOp(player);
+        ItemStack item = event.getCurrentItem();
+
+        if (item == null) return;
+
+        ItemCrafter itemCrafter = new ItemCrafter(item);
+
+        if (itemCrafter.hasTag("gui")) {
+            event.setCancelled(true);
+            player.updateInventory();
+
+            if (itemCrafter.hasTag("command")) {
+                String command = itemCrafter.getTag("command");
+                boolean opOnly = Boolean.parseBoolean(itemCrafter.getTag("op_only"));
+
+                if (!opOnly || op) Bukkit.dispatchCommand(player, command);
+            }
         }
     }
 
