@@ -60,7 +60,7 @@ public class TaskUtils {
             int id = runnable.getTaskId();
             return Bukkit.getScheduler().isQueued(id) || Bukkit.getScheduler().isCurrentlyRunning(id);
         } catch (IllegalStateException e) {
-            e.printStackTrace();
+            // task hasn't been scheduled yet
             return false;
         }
     }
