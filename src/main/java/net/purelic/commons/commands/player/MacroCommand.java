@@ -18,9 +18,16 @@ import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 public class MacroCommand {
+
+    private static final double COOLDOWN = 5D; // 5 seconds
+    private static final Map<UUID, Macro> LAST_MACRO = new HashMap<>();
+    private static final Map<UUID, Long> LAST_SENT = new HashMap<>();
 
     private enum Macro {
 
@@ -119,7 +126,20 @@ public class MacroCommand {
                 .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/" + this.command))
                 .create();
 
-            Bukkit.broadcast((BaseComponent[]) ArrayUtils.addAll(fancyName, fancyMessage));
+            UUID uuid = sender.getUniqueId();
+            boolean block = false;
+
+            if (LAST_MACRO.containsKey(uuid)) {
+                boolean sameMacro = LAST_MACRO.get(uuid) == this;
+                double timeLeft = (LAST_SENT.get(uuid) + COOLDOWN * 1000L) - System.currentTimeMillis();
+                if (sameMacro && timeLeft > 0) block = true;
+            }
+
+            if (block) sender.sendMessage((BaseComponent[]) ArrayUtils.addAll(fancyName, fancyMessage));
+            else Bukkit.broadcast((BaseComponent[]) ArrayUtils.addAll(fancyName, fancyMessage));
+
+            LAST_MACRO.put(uuid, this);
+            LAST_SENT.put(uuid, System.currentTimeMillis());
         }
 
     }
