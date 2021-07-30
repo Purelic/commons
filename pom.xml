@@ -75,6 +75,8 @@
             <groupId>me.vagdedes</groupId>
             <artifactId>spartan</artifactId>
             <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/SpartanAPI.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>cloud.commandframework</groupId>

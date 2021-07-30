@@ -29,6 +29,7 @@ public class ProcessCommand implements Listener {
     private static final List<String> WHITELISTED_COMMANDS = new ArrayList<>(Arrays.asList(
         "minecraft:tp",
         "minecraft:gamemode",
+        "minecraft:worldborder",
         "gamemode",
         "gamerule",
         "give",

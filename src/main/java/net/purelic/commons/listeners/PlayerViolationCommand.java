@@ -1,13 +1,11 @@
 package net.purelic.commons.listeners;
 
 import me.vagdedes.spartan.api.PlayerViolationCommandEvent;
-import me.vagdedes.spartan.system.Enums;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.purelic.commons.Commons;
 import net.purelic.commons.profile.Profile;
 import net.purelic.commons.utils.*;
-import net.purelic.commons.utils.constants.ViolationCategory;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.configuration.Configuration;
@@ -28,14 +26,7 @@ public class PlayerViolationCommand implements Listener {
     @EventHandler
     public void onPlayerViolationCommand(PlayerViolationCommandEvent event) {
         Player player = event.getPlayer();
-        String hack = this.formatHackType(event.getHackType());
-        ViolationCategory category = this.getViolationCategory(event.getCommand());
-
-        // Auto-Ban if we're certain the player is cheating
-        if (category == ViolationCategory.Absolute) {
-            Commons.sendSpringMessage(player, "AutoBan", "Hacking - " + hack);
-            return;
-        }
+        String hacks = this.getHacks(event.getCommand(), player);
 
         for (Player online : Bukkit.getOnlinePlayers()) {
             Profile profile = Commons.getProfile(online);
@@ -45,30 +36,25 @@ public class PlayerViolationCommand implements Listener {
             ChatUtils.sendMessage(online,
                 new ComponentBuilder("GUARDIAN  ").color(ChatColor.RED).bold(true).create()[0],
                 Fetcher.getFancyName(player),
-                new ComponentBuilder(ChatColor.GRAY + " " + ChatUtils.ARROW + ChatColor.WHITE + " " + hack + " (" + category + ")").create()[0],
+                new ComponentBuilder(ChatColor.GRAY + " " + ChatUtils.ARROW + ChatColor.WHITE + " " + hacks).create()[0],
                 new ComponentBuilder(" (" + Commons.getPing(player) + "ms / " + Commons.getTPS() + " TPS)").color(ChatColor.GRAY).create()[0]);
 
             online.playSound(online.getLocation(), Sound.BLAZE_DEATH, 2F, 1F);
         }
 
-        this.sendDiscordReport(player, hack, category);
+        this.sendDiscordReport(player, hacks);
     }
 
-    private ViolationCategory getViolationCategory(String command) {
-        return ViolationCategory.valueOf(command.split(" do ")[2].trim());
+    private String getHacks(String command, Player player) {
+        return command.split(" do spartan kick " + player.getName() + " ")[2].trim();
     }
 
-    private String formatHackType(Enums.HackType hackType) {
-        return hackType.name().replaceAll("([A-Z])", " $1").trim();
-    }
-
-    private void sendDiscordReport(Player reported, String hack, ViolationCategory violationCategory) {
+    private void sendDiscordReport(Player reported, String hacks) {
         DiscordWebhook webhook = new DiscordWebhook(this.webhook, "Guardian");
         webhook.addEmbed(new DiscordWebhook.EmbedObject()
             .setColor(Color.ORANGE)
             .addField("Nickname", NickUtils.isNicked(reported) ? NickUtils.getNick(reported) : "N/A", false)
-            .addField("Hack Type", hack, false)
-            .addField("Violation Category", violationCategory.name(), false)
+            .addField("Hack(s)", hacks, false)
             .addField("Server", ServerUtils.getName(), false)
             .addField("Ping", Commons.getPing(reported) + "", false)
             .addField("TPS", Commons.getTPS() + "", false)
