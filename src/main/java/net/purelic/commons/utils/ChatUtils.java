@@ -34,6 +34,10 @@ public class ChatUtils {
     private static final List<String> CENSORED_WORDS = new ArrayList<>();
     private static String censorRegex = "";
 
+    private static final double COOLDOWN = 10D; // 10 seconds
+    private static final Map<UUID, String> LAST_MESSAGES = new HashMap<>();
+    private static final Map<UUID, Long> LAST_SENT = new HashMap<>();
+
     public static void addCensoredWords(Configuration config) {
         BLOCKED_WORDS.addAll(config.getStringList("blocked_words"));
         CENSORED_WORDS.addAll(config.getStringList("censored_words"));
@@ -164,12 +168,17 @@ public class ChatUtils {
     }
 
     public static void sendFancyChatMessage(Player player, String message, BaseComponent[] prefix, Collection<? extends Player> audience) {
-        if (blockMessage(message)) {
+        UUID uuid = player.getUniqueId();
+
+        if (blockMessage(uuid, message)) {
             // If message contains a blocked word,
             // we block the message entirely for everyone,
             // but still show it to the sender
             audience = new ArrayList<>(Collections.singleton(player));
         }
+
+        LAST_MESSAGES.put(uuid, message);
+        LAST_SENT.put(uuid, System.currentTimeMillis());
 
         BaseComponent[] fancyMessage = getFancyChatMessage(player, prefix, message, audience);
         for (Player online : audience) online.sendMessage(fancyMessage);
@@ -231,7 +240,13 @@ public class ChatUtils {
         return (BaseComponent[]) ArrayUtils.addAll(prefix, ArrayUtils.addAll(fancyName, fancyMessage.create()));
     }
 
-    private static boolean blockMessage(String message) {
+    private static boolean blockMessage(UUID uuid, String message) {
+        if (LAST_MESSAGES.containsKey(uuid)) {
+            boolean sameMessage = LAST_MESSAGES.get(uuid).trim().equalsIgnoreCase(message.trim());
+            double timeLeft = (LAST_SENT.get(uuid) + COOLDOWN * 1000L) - System.currentTimeMillis();
+            if (sameMessage && timeLeft > 0) return true;
+        }
+
         String[] words = message.split("\\b");
 
         for (String censored : BLOCKED_WORDS) {
