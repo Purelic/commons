@@ -51,11 +51,12 @@ public class VersionUtils {
         MINECRAFT_1_16_1(736, "1.16.1"),
         MINECRAFT_1_16_2(751, "1.16.2"),
         MINECRAFT_1_16_3(753, "1.16.3"),
-        MINECRAFT_1_16_4(754, "1.16.4"),
-        MINECRAFT_1_16_5(755, "1.16.5"),
+        MINECRAFT_1_16_5(754, "1.16.5"),
+        MINECRAFT_1_17(755, "1.17"),
+        MINECRAFT_1_17_1(756, "1.17.1"),
         ;
 
-        public final static Protocol MINECRAFT_LATEST = MINECRAFT_1_16_5;
+        public final static Protocol MINECRAFT_LATEST = MINECRAFT_1_17_1;
 
         private final int protocol;
         private final String fullLabel;
