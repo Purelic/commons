@@ -55,7 +55,8 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
     private PaperCommandManager<CommandSender> commandManager;
 
     private static Commons plugin;
-    private static boolean ready;
+    private static boolean commonsReady;
+    private static boolean serverReady;
     private static Map<UUID, Profile> profiles;
     private static World lobby;
 
@@ -66,7 +67,8 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
     @Override
     public void onEnable() {
         plugin = this;
-        ready = false;
+        commonsReady = false;
+        serverReady = false;
         profiles = new HashMap<>();
 
         config = this.getConfig();
@@ -107,14 +109,18 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
     }
 
     public static boolean isReady() {
-        return ready;
+        return serverReady;
     }
 
-    public static void setReady() {
-        ready = true;
+    private static void setCommonsReady() {
+        commonsReady = true;
         if (idleTimer > 0) TaskUtils.runLater(new IdleTimer(), idleTimer);
-        DatabaseUtils.setServerOnline();
         callEvent(new CommonsReadyEvent());
+    }
+
+    public static void setServerReady() {
+        DatabaseUtils.setServerOnline();
+        serverReady = true;
     }
 
     public static String getRoot() {
@@ -127,7 +133,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
 
     public static void setLobby(World world) {
         lobby = world;
-        setReady();
+        setCommonsReady();
     }
 
     public static boolean isOwner(Player player) {
