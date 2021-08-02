@@ -6,12 +6,14 @@ import net.purelic.commons.Commons;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ServerUtils {
 
+    private static Map<String, Object> documentData;
     private static String serverNameCache = null;
     private static String serverIdCache = null;
     private static boolean isPrivateCached = false;
@@ -24,13 +26,24 @@ public class ServerUtils {
     private static Object get(String field, Object defaultValue) {
         if (DatabaseUtils.serverDoc == null) return defaultValue;
 
+        if (documentData != null) {
+            return documentData.getOrDefault(field, defaultValue);
+        }
+
         ApiFuture<DocumentSnapshot> future = DatabaseUtils.serverDoc.get();
 
         try {
             DocumentSnapshot document = future.get();
-            if (!document.exists()) return defaultValue;
-            else return document.getData().getOrDefault(field, defaultValue);
+
+            if (document.exists() && document.getData() != null) {
+                documentData = document.getData();
+            } else {
+                documentData = new HashMap<>();
+            }
+
+            return documentData.getOrDefault(field, defaultValue);
         } catch (Exception e) {
+            documentData = new HashMap<>();
             return defaultValue;
         }
     }
