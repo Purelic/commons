@@ -54,7 +54,7 @@ public class BasicScoreboardModule implements Module {
         if (VersionUtils.isLegacy(player)) return;
 
         String header = ServerUtils.isPrivate() ?
-            ServerUtils.getName() + "'s Server" : "PuRelic";
+            ServerUtils.getName() + "'s Server" : "Purelic";
 
         TextComponent tabHeader = new TextComponent(header);
         tabHeader.setBold(true);
