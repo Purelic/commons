@@ -1,6 +1,7 @@
 package net.purelic.commons.listeners;
 
 import me.vagdedes.spartan.api.PlayerViolationCommandEvent;
+import me.vagdedes.spartan.system.Enums;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.purelic.commons.Commons;
@@ -26,7 +27,7 @@ public class PlayerViolationCommand implements Listener {
     @EventHandler
     public void onPlayerViolationCommand(PlayerViolationCommandEvent event) {
         Player player = event.getPlayer();
-        String hacks = this.getHacks(event.getCommand(), player);
+        String hacks = this.getHacks(event.getHackTypes());
 
         for (Player online : Bukkit.getOnlinePlayers()) {
             Profile profile = Commons.getProfile(online);
@@ -45,8 +46,27 @@ public class PlayerViolationCommand implements Listener {
         this.sendDiscordReport(player, hacks);
     }
 
-    private String getHacks(String command, Player player) {
-        return command.split(" do spartan kick " + player.getName() + " ")[2].trim();
+    private String getHacks(Enums.HackType[] hackTypes) {
+        String hacks = "";
+
+        boolean first = true;
+
+        for (Enums.HackType hack : hackTypes) {
+            if (!first) hacks += ", ";
+            first = false;
+
+            if (hack == Enums.HackType.IrregularMovements) {
+                hacks += "Irregular Movements";
+            } else if (hack == Enums.HackType.HitReach) {
+                hacks += "Reach";
+            } else if (hack == Enums.HackType.FastClicks) {
+                hacks += "Auto-Clicking";
+            } else {
+                hacks += hack.name();
+            }
+        }
+
+        return hacks;
     }
 
     private void sendDiscordReport(Player reported, String hacks) {
