@@ -33,6 +33,19 @@ public class Profile {
     private String name;
     private String nameLower;
     private long timePlayed;
+    private long mapSlots;
+    private long gameModeSlots;
+    private long relicsCurrent;
+    private long relicsLifetime;
+    private long relicsGifted;
+    private long relicsReceived;
+    private long goldCurrent;
+    private long goldLifetime;
+    private Timestamp premiumExpiration;
+    private boolean premiumSubscribed;
+    private long premiumPurchased;
+    private long premiumGifted;
+    private long premiumReceived;
 
     public Profile() {
         this.ranks = new ArrayList<>();
@@ -46,6 +59,19 @@ public class Profile {
         this.name = null;
         this.nameLower = null;
         this.timePlayed = 0L;
+        this.mapSlots = 0L;
+        this.gameModeSlots = 0L;
+        this.relicsCurrent = 0L;
+        this.relicsLifetime = 0L;
+        this.relicsGifted = 0L;
+        this.relicsReceived = 0L;
+        this.goldCurrent = 0L;
+        this.goldLifetime = 0L;
+        this.premiumExpiration = null;
+        this.premiumSubscribed = false;
+        this.premiumPurchased = 0L;
+        this.premiumGifted = 0L;
+        this.premiumReceived = 0L;
     }
 
     public UUID getUniqueId() {
@@ -366,6 +392,136 @@ public class Profile {
     @PropertyName("time_played")
     public long getTimePlayed() {
         return this.timePlayed;
+    }
+
+    @PropertyName("map_slots")
+    public void setMapSlots(long mapSlots) {
+        this.mapSlots = mapSlots;
+    }
+
+    @PropertyName("map_slots")
+    public long getMapSlots() {
+        return this.mapSlots;
+    }
+
+    @PropertyName("game_mode_slots")
+    public void setGameModeSlots(long gameModeSlots) {
+        this.gameModeSlots = gameModeSlots;
+    }
+
+    @PropertyName("game_mode_slots")
+    public long getGameModeSlots() {
+        return this.gameModeSlots;
+    }
+
+    @PropertyName("relics_current")
+    public void setRelicsCurrent(long relicsCurrent) {
+        this.relicsCurrent = relicsCurrent;
+    }
+
+    @PropertyName("relics_current")
+    public long getRelicsCurrent() {
+        return this.relicsCurrent;
+    }
+
+    @PropertyName("relics_lifetime")
+    public void setRelicsLifetime(long relicsLifetime) {
+        this.relicsLifetime = relicsLifetime;
+    }
+
+    @PropertyName("relics_lifetime")
+    public long getRelicsLifetime() {
+        return this.relicsLifetime;
+    }
+
+    @PropertyName("relics_gifted")
+    public void setRelicsGifted(long relicsGifted) {
+        this.relicsGifted = relicsGifted;
+    }
+
+    @PropertyName("relics_gifted")
+    public long getRelicsGifted() {
+        return this.relicsGifted;
+    }
+
+    @PropertyName("relics_received")
+    public void setRelicsReceived(long relicsReceived) {
+        this.relicsReceived = relicsReceived;
+    }
+
+    @PropertyName("relics_received")
+    public long getRelicsReceived() {
+        return this.relicsReceived;
+    }
+
+    @PropertyName("gold_current")
+    public void setGoldCurrent(long goldCurrent) {
+        this.goldCurrent = goldCurrent;
+    }
+
+    @PropertyName("gold_current")
+    public long getGoldCurrent() {
+        return this.goldCurrent;
+    }
+
+    @PropertyName("gold_lifetime")
+    public void setGoldLifetime(long goldLifetime) {
+        this.goldLifetime = goldLifetime;
+    }
+
+    @PropertyName("gold_lifetime")
+    public long getGoldLifetime() {
+        return this.goldLifetime;
+    }
+
+    @PropertyName("premium_expiration")
+    public void setPremiumExpiration(Timestamp premiumExpiration) {
+        this.premiumExpiration = premiumExpiration;
+    }
+
+    @PropertyName("premium_expiration")
+    public Timestamp getPremiumExpiration() {
+        return premiumExpiration;
+    }
+
+    @PropertyName("premium_subscribed")
+    public void setPremiumSubscribed(boolean premiumSubscribed) {
+        this.premiumSubscribed = premiumSubscribed;
+    }
+
+    @PropertyName("premium_subscribed")
+    public boolean isPremiumSubscribed() {
+        return premiumSubscribed;
+    }
+
+    @PropertyName("premium_purchased")
+    public void setPremiumPurchased(long premiumPurchased) {
+        this.premiumPurchased = premiumPurchased;
+    }
+
+    @PropertyName("premium_purchased")
+    public long getPremiumPurchased() {
+        return premiumPurchased;
+    }
+
+    @PropertyName("premium_gifted")
+    public void setPremiumGifted(long premiumGifted) {
+        this.premiumGifted = premiumGifted;
+    }
+
+    @PropertyName("premium_gifted")
+    public long getPremiumGifted() {
+        return premiumGifted;
+    }
+
+    @PropertyName("premium_received")
+    public void setPremiumReceived(long premiumReceived) {
+        this.premiumReceived = premiumReceived;
+    }
+
+    @PropertyName("premium_received")
+    public long getPremiumReceived() {
+        return this.premiumReceived;
     }
 
 }
