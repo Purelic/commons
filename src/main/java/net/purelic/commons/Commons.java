@@ -24,9 +24,11 @@ import net.purelic.commons.commands.player.ShrugCommand;
 import net.purelic.commons.commands.player.VersionCommand;
 import net.purelic.commons.commands.whitelist.*;
 import net.purelic.commons.events.CommonsReadyEvent;
+import net.purelic.commons.events.PlayerRankChangeEvent;
 import net.purelic.commons.listeners.*;
 import net.purelic.commons.modules.NPCModule;
 import net.purelic.commons.profile.Profile;
+import net.purelic.commons.profile.Rank;
 import net.purelic.commons.runnables.IdleTimer;
 import net.purelic.commons.utils.*;
 import net.purelic.commons.utils.packets.Hologram;
@@ -326,6 +328,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
         player.sendPluginMessage(plugin, SPRING_MESSAGE_CHANNEL, stream.toByteArray());
     }
 
+    @SuppressWarnings("all")
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] bytes) {
         if (!channel.equalsIgnoreCase(SPRING_MESSAGE_CHANNEL)) return;
@@ -390,6 +393,16 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
                 hologram.set(lines);
                 hologram.show();
             }
+        } else if (subChannel.equals("AddRank")) {
+            Rank rank = Rank.valueOf(in.readUTF());
+            Profile profile = getProfile(player);
+            profile.addRank(rank);
+            Commons.callEvent(new PlayerRankChangeEvent(player, profile));
+        } else if (subChannel.equals("RemoveRank")) {
+            Rank rank = Rank.valueOf(in.readUTF());
+            Profile profile = getProfile(player);
+            profile.removeRank(rank);
+            Commons.callEvent(new PlayerRankChangeEvent(player, profile));
         }
     }
 
