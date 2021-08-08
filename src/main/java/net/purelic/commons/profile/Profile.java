@@ -217,10 +217,25 @@ public class Profile {
             i++;
         }
 
+        boolean staffFlairAdded = false;
+        boolean creatorFlairAdded = false;
+
         if (!this.isNicked() || force) {
             for (Rank rank : this.ranks) {
+                if (staffFlairAdded && (rank.isStaff() || rank == Rank.PREMIUM)) continue;
+                if (creatorFlairAdded && rank == Rank.PREMIUM) continue;
+
                 if (i == 4 & truncate) break;
-                flairs.append(rank.getFlair());
+
+                if (rank == Rank.PREMIUM && this.premiumSubscribed) {
+                    flairs.append(Rank.PREMIUM_PLUS.getFlair());
+                } else {
+                    flairs.append(rank.getFlair());
+                }
+
+                if (rank.isStaff()) staffFlairAdded = true;
+                if (rank == Rank.CREATOR) creatorFlairAdded = true;
+
                 i++;
             }
         }
@@ -237,9 +252,22 @@ public class Profile {
             flairs.addExtra(Rank.getFancyOperatorFlair());
         }
 
+        boolean staffFlairAdded = false;
+        boolean creatorFlairAdded = false;
+
         if (!this.isNicked()) {
             for (Rank rank : this.ranks) {
-                flairs.addExtra(rank.getFancyFlair());
+                if (staffFlairAdded && (rank.isStaff() || rank == Rank.PREMIUM)) continue;
+                if (creatorFlairAdded && rank == Rank.PREMIUM) continue;
+
+                if (rank == Rank.PREMIUM && this.premiumSubscribed) {
+                    flairs.addExtra(Rank.PREMIUM_PLUS.getFancyFlair());
+                } else {
+                    flairs.addExtra(rank.getFancyFlair());
+                }
+
+                if (rank.isStaff()) staffFlairAdded = true;
+                if (rank == Rank.CREATOR) creatorFlairAdded = true;
             }
         }
 
