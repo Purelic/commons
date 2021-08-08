@@ -9,7 +9,7 @@ public enum Rank {
 
     // League
     IRON("Iron Rank", '❖', ChatColor.DARK_GRAY, "0 - 500 ELO", "leaderboards"),
-    GOLD("Gold Rank", '❖', ChatColor.YELLOW, "500 - 1000 ELO", "leaderboards"),
+    GOLD_LEAGUE("Gold Rank", '❖', ChatColor.YELLOW, "500 - 1000 ELO", "leaderboards"),
     DIAMOND("Diamond Rank", '❖', ChatColor.AQUA, "1000 - 1500 ELO", "leaderboards"),
     EMERALD("Emerald Rank", '❖', ChatColor.GREEN, "1500 - 2000 ELO", "leaderboards"),
     QUARTZ("Quartz Rank", '❖', ChatColor.WHITE, "2000+ ELO", "leaderboards"),
@@ -24,6 +24,7 @@ public enum Rank {
 
     // Player
     PREMIUM("Premium", '*', ChatColor.GREEN, "Donated to the server at purelic.net/donate", "donate"), // Old - ◊
+    GOLD("Gold", '*', ChatColor.YELLOW, "Donated to the server at purelic.net/donate", "donate"),
     CREATOR("Creator", '*', ChatColor.RED, "Content creator on the internet", "staff"),
     // OG_PLAYER("OG Player", '*', ChatColor.WHITE, "Joined the original PuRelic in 2015/2016"),
     ;

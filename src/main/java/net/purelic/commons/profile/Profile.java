@@ -316,7 +316,7 @@ public class Profile {
 
     public Rank getLeagueRank() {
         if (this.rating < 500) return Rank.IRON;
-        else if (this.rating < 1000) return Rank.GOLD;
+        else if (this.rating < 1000) return Rank.GOLD_LEAGUE;
         else if (this.rating < 1500) return Rank.DIAMOND;
         else if (this.rating < 2000) return Rank.EMERALD;
         else return Rank.QUARTZ;
