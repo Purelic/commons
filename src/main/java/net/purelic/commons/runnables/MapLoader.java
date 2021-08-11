@@ -16,20 +16,20 @@ public class MapLoader extends BukkitRunnable {
     private final String id;
     private final boolean copy;
 
-    public MapLoader(String map) {
-        this(map, map);
+    public MapLoader(String map, boolean lobby) {
+        this(map, map, false);
     }
 
-    public MapLoader(String map, boolean copy) {
-        this(map, map, copy);
+    public MapLoader(String map, boolean copy, boolean lobby) {
+        this(map, map, copy, false);
     }
 
-    public MapLoader(String map, String id) {
-        this(map, id, true);
+    public MapLoader(String map, String id, boolean lobby) {
+        this(map, id, true, false);
     }
 
-    public MapLoader(String map, String id, boolean copy) {
-        this.lobby = map.equalsIgnoreCase("Lobby") || map.equalsIgnoreCase("Hub");
+    public MapLoader(String map, String id, boolean copy, boolean lobby) {
+        this.lobby = lobby;
         this.map = map;
         this.id = id;
         this.copy = copy;
@@ -41,8 +41,12 @@ public class MapLoader extends BukkitRunnable {
 
         TaskUtils.run(() -> {
             World world = (new WorldCreator(id)).generator(new NullChunkGenerator()).createWorld();
-            if (lobby) Commons.setLobby(world);
-            else Commons.callEvent(new MapLoadEvent(map, world));
+
+            if (this.lobby) {
+                Commons.setLobby(world);
+            }
+
+            Commons.callEvent(new MapLoadEvent(map, world, this.lobby));
         });
     }
 

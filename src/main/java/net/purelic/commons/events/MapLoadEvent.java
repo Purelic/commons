@@ -10,10 +10,12 @@ public class MapLoadEvent extends Event {
 
     private final String map;
     private final World world;
+    private final boolean lobby;
 
-    public MapLoadEvent(String map, World world) {
+    public MapLoadEvent(String map, World world, boolean lobby) {
         this.map = map;
         this.world = world;
+        this.lobby = lobby;
     }
 
     public String getMap() {
@@ -22,6 +24,10 @@ public class MapLoadEvent extends Event {
 
     public World getWorld() {
         return this.world;
+    }
+
+    public boolean isLobby() {
+        return this.lobby;
     }
 
     public HandlerList getHandlers() {
