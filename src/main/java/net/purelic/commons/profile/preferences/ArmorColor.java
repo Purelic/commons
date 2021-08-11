@@ -31,10 +31,10 @@ public enum ArmorColor {
     PASTEL_BLUE("#BAE1FF"),
     ;
 
-    private final long helmet;
-    private final long chestplate;
-    private final long leggings;
-    private final long boots;
+    private final int helmet;
+    private final int chestplate;
+    private final int leggings;
+    private final int boots;
 
     ArmorColor(String color) {
         this(color, color);
@@ -59,19 +59,19 @@ public enum ArmorColor {
         return r << 16 | g << 8 | b;
     }
 
-    public long getHelmet() {
+    public int getHelmet() {
         return this.helmet;
     }
 
-    public long getChestplate() {
+    public int getChestplate() {
         return this.chestplate;
     }
 
-    public long getLeggings() {
+    public int getLeggings() {
         return this.leggings;
     }
 
-    public long getBoots() {
+    public int getBoots() {
         return this.boots;
     }
 
