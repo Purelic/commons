@@ -2,6 +2,7 @@ package net.purelic.commons.utils.packets;
 
 import net.purelic.commons.Commons;
 import net.purelic.commons.utils.Fetcher;
+import net.purelic.commons.utils.NickUtils;
 import net.purelic.commons.utils.YamlObject;
 import net.purelic.commons.utils.packets.constants.NPCModifiers;
 import org.bukkit.Bukkit;
@@ -18,7 +19,7 @@ public class NPC extends YamlObject<NPCModifiers> {
     private final double y;
     private final double z;
     private final double yaw;
-    private final String skin;
+    private String skin;
     private final Hologram hologram;
     private Location location;
     private FakePlayer entity;
@@ -54,6 +55,18 @@ public class NPC extends YamlObject<NPCModifiers> {
         return this.hologram;
     }
 
+    public boolean hasSkinSet() {
+        return this.skin != null;
+    }
+
+    public String getSkin() {
+        return this.skin;
+    }
+
+    public void setSkin(Player player) {
+        this.skin = NickUtils.getRealName(player);
+    }
+
     public int getEntityId() {
         if (this.entity == null) return -1;
         return this.entity.getEntityId();
@@ -85,7 +98,12 @@ public class NPC extends YamlObject<NPCModifiers> {
     }
 
     public void remove() {
+        this.remove(false);
+    }
+
+    public void remove(boolean entityOnly) {
         if (this.entity != null) this.entity.remove();
+        if (entityOnly) return;
         this.hologram.remove();
     }
 

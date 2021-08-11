@@ -4,10 +4,13 @@ import io.netty.channel.*;
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
 import net.purelic.commons.Commons;
 import net.purelic.commons.events.NPCInteractEvent;
+import net.purelic.commons.utils.CommandUtils;
+import net.purelic.commons.utils.NickUtils;
 import net.purelic.commons.utils.TaskUtils;
 import net.purelic.commons.utils.packets.Hologram;
 import net.purelic.commons.utils.packets.NPC;
 import net.purelic.commons.utils.packets.constants.NPCInteractAction;
+import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -79,10 +82,41 @@ public class NPCModule implements Module {
     @EventHandler
     public void onNPCInteract(NPCInteractEvent event) {
         Player player = event.getPlayer();
+        NPC npc = event.getNPC();
+
+        // change npc skin
+        if (player.getItemInHand() != null && player.getItemInHand().getType() == Material.MONSTER_EGG) {
+            if (!npc.hasSkinSet()) {
+                CommandUtils.sendErrorMessage(player, "You cannot change the skin of this NPC!");
+                return;
+            }
+
+            if (npc.getSkin().equals(NickUtils.getNick(player))) {
+                CommandUtils.sendErrorMessage(player, "This NPC already has your skin!");
+                return;
+            }
+
+            int amount = player.getItemInHand().getAmount();
+
+            if (amount == 1) {
+                player.setItemInHand(null);
+            } else {
+                player.getItemInHand().setAmount(amount - 1);
+            }
+
+            Commons.getProfile(player).useNPCEgg();
+
+            npc.setSkin(player);
+            npc.remove(true);
+            npc.create();
+
+            return;
+        }
+
         Commons.sendSpringMessage(
             player,
             "NPCInteract",
-            event.getNPC().getId(),
+            npc.getId(),
             event.getAction().name()
         );
     }
@@ -126,7 +160,6 @@ public class NPCModule implements Module {
                     // so we avoid double triggering the NPCInteractEvent by ingoring the INTERACT_AT actions
                     if (entityUseAction == PacketPlayInUseEntity.EnumEntityUseAction.INTERACT_AT) return;
 
-
                     NPCInteractAction action = entityUseAction == PacketPlayInUseEntity.EnumEntityUseAction.ATTACK ?
                         NPCInteractAction.LEFT_CLICK : NPCInteractAction.RIGHT_CLICK;
 
@@ -139,7 +172,6 @@ public class NPCModule implements Module {
                     if (npc != null) {
                         Commons.callEvent(new NPCInteractEvent(player, npc, action));
                     }
-
                 }
 
                 super.channelRead(channelHandlerContext, packet);

@@ -35,6 +35,7 @@ import net.purelic.commons.utils.*;
 import net.purelic.commons.utils.packets.Hologram;
 import net.purelic.commons.utils.packets.NPC;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.Configuration;
@@ -413,6 +414,13 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
             Profile profile = getProfile(player);
             profile.removeRank(rank);
             Commons.callEvent(new PlayerRankChangeEvent(player, profile));
+        } else if (subChannel.equals("GiveEggs")) {
+            int eggs = Integer.parseInt(in.readUTF());
+            player.getInventory().addItem(new ItemCrafter(Material.MONSTER_EGG)
+                .amount(eggs)
+                .name(ChatColor.LIGHT_PURPLE + "NPC Skin Changer")
+                .craft());
+            getProfile(player).addNPCEggs(eggs);
         }
     }
 

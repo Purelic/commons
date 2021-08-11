@@ -1,6 +1,7 @@
 package net.purelic.commons.profile;
 
 import com.google.cloud.Timestamp;
+import com.google.cloud.firestore.FieldValue;
 import com.google.cloud.firestore.annotation.PropertyName;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -34,6 +35,7 @@ public class Profile {
     private String nameLower;
     private long timePlayed;
     private long mapSlots;
+    private long npcEggs;
     private long gameModeSlots;
     private long relicsCurrent;
     private long relicsLifetime;
@@ -60,6 +62,7 @@ public class Profile {
         this.nameLower = null;
         this.timePlayed = 0L;
         this.mapSlots = 0L;
+        this.npcEggs = 0L;
         this.gameModeSlots = 0L;
         this.relicsCurrent = 0L;
         this.relicsLifetime = 0L;
@@ -430,6 +433,26 @@ public class Profile {
     @PropertyName("map_slots")
     public long getMapSlots() {
         return this.mapSlots;
+    }
+
+    @PropertyName("npc_eggs")
+    public void setNpcEggs(long npcEggs) {
+        this.npcEggs = npcEggs;
+    }
+
+    public void addNPCEggs(int eggs) {
+        this.npcEggs += eggs;
+        DatabaseUtils.update(this, "npc_eggs", FieldValue.increment(eggs));
+    }
+
+    @PropertyName("npc_eggs")
+    public long getNpcEggs() {
+        return this.npcEggs;
+    }
+
+    public void useNPCEgg() {
+        this.npcEggs--;
+        DatabaseUtils.update(this, "npc_eggs", FieldValue.increment(-1));
     }
 
     @PropertyName("game_mode_slots")
