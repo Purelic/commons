@@ -222,7 +222,7 @@ public class Profile {
 
         if (!this.isNicked() || force) {
             for (Rank rank : this.ranks) {
-                if (staffFlairAdded && (rank.isStaff() || rank == Rank.PREMIUM)) continue;
+                if (staffFlairAdded && (rank.isStaff() || rank == Rank.PREMIUM || rank == Rank.CREATOR)) continue;
                 if (creatorFlairAdded && rank == Rank.PREMIUM) continue;
 
                 if (i == 4 & truncate) break;
