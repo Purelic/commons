@@ -139,7 +139,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
         setCommonsReady();
     }
 
-    private String getLobbyPreference() {
+    public static String getLobbyPreference() {
         if (Commons.hasOwner()) {
             return (String) Commons.getProfile(Commons.getOwnerId()).getPreference(Preference.LOBBY, "Default Lobby");
         } else {
