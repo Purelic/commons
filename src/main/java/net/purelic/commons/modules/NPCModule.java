@@ -20,15 +20,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class NPCModule implements Module {
 
     private static final Map<String, NPC> NPCS = new HashMap<>();
-    private static final List<Hologram> HOLOGRAMS = new ArrayList<>();
+    private static final Map<String, Hologram> HOLOGRAMS = new HashMap<>();
     private static JavaPlugin plugin;
 
     public NPCModule(JavaPlugin plugin) {
@@ -45,7 +43,7 @@ public class NPCModule implements Module {
     @SuppressWarnings("unchecked")
     public static void reload(Configuration config) {
         for (NPC npc : NPCS.values()) npc.remove();
-        for (Hologram hologram : HOLOGRAMS) hologram.remove();
+        for (Hologram hologram : HOLOGRAMS.values()) hologram.remove();
 
         NPCS.clear();
         HOLOGRAMS.clear();
@@ -59,7 +57,7 @@ public class NPCModule implements Module {
         for (Map<?, ?> yaml : config.getMapList("holograms")) {
             Hologram hologram = new Hologram((Map<String, Object>) yaml);
             hologram.show();
-            HOLOGRAMS.add(hologram);
+            HOLOGRAMS.put(hologram.getId(), hologram);
         }
     }
 
@@ -75,8 +73,8 @@ public class NPCModule implements Module {
         return null;
     }
 
-    public static List<Hologram> getHolograms() {
-        return HOLOGRAMS;
+    public static Hologram getHologramById(String id) {
+        return HOLOGRAMS.get(id);
     }
 
     @EventHandler
@@ -129,7 +127,7 @@ public class NPCModule implements Module {
         // Adding a slight delay after joining helps with npcs and holograms not showing consistently
         TaskUtils.runLaterAsync(() -> {
             for (NPC npc : NPCS.values()) npc.show(player);
-            for (Hologram hologram : HOLOGRAMS) hologram.show(player);
+            for (Hologram hologram : HOLOGRAMS.values()) hologram.show(player);
         }, 5L);
     }
 

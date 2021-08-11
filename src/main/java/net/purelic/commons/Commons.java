@@ -404,6 +404,15 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
                 hologram.set(lines);
                 hologram.show();
             }
+        } else if (subChannel.equals("UpdateHologram")) {
+            String id = in.readUTF();
+            String[] lines = in.readUTF().split("\n");
+            Hologram hologram = NPCModule.getHologramById(id);
+
+            if (hologram != null) {
+                hologram.set(lines);
+                hologram.show();
+            }
         } else if (subChannel.equals("AddRank")) {
             Rank rank = Rank.valueOf(in.readUTF());
             Profile profile = getProfile(player);

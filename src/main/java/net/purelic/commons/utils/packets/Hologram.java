@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class Hologram extends YamlObject<HologramModifiers> {
 
+    private final String id;
     private final double x;
     private final double y;
     private final double z;
@@ -20,6 +21,7 @@ public class Hologram extends YamlObject<HologramModifiers> {
 
     public Hologram(NPC npc) {
         super(new HashMap<>());
+        this.id = npc.getId();
         this.x = npc.getX();
         this.y = npc.getY() + 0.5;
         this.z = npc.getZ();
@@ -29,6 +31,7 @@ public class Hologram extends YamlObject<HologramModifiers> {
 
     public Hologram(Map<String, Object> yaml) {
         super(yaml);
+        this.id = this.get(HologramModifiers.ID);
         this.x = this.get(HologramModifiers.X);
         this.y = this.get(HologramModifiers.Y);
         this.z = this.get(HologramModifiers.Z);
@@ -37,6 +40,10 @@ public class Hologram extends YamlObject<HologramModifiers> {
 
         List<String> lines = this.get(HologramModifiers.LINES);
         this.set(lines.toArray(new String[0]));
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     public void set(String... lines) {
