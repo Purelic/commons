@@ -414,22 +414,25 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
                 hologram.show();
             }
         } else if (subChannel.equals("AddRank")) {
+            UUID playerId = UUID.fromString(in.readUTF());
             Rank rank = Rank.valueOf(in.readUTF());
-            Profile profile = getProfile(player);
+            Profile profile = getProfile(playerId);
             profile.addRank(rank);
-            Commons.callEvent(new PlayerRankChangeEvent(player, profile));
+            Commons.callEvent(new PlayerRankChangeEvent(profile.getPlayer(), profile));
         } else if (subChannel.equals("RemoveRank")) {
+            UUID playerId = UUID.fromString(in.readUTF());
             Rank rank = Rank.valueOf(in.readUTF());
-            Profile profile = getProfile(player);
+            Profile profile = getProfile(playerId);
             profile.removeRank(rank);
-            Commons.callEvent(new PlayerRankChangeEvent(player, profile));
+            Commons.callEvent(new PlayerRankChangeEvent(profile.getPlayer(), profile));
         } else if (subChannel.equals("GiveEggs")) {
+            UUID playerId = UUID.fromString(in.readUTF());
             int eggs = Integer.parseInt(in.readUTF());
-            player.getInventory().addItem(new ItemCrafter(Material.MONSTER_EGG)
+            Bukkit.getPlayer(playerId).getInventory().addItem(new ItemCrafter(Material.MONSTER_EGG)
                 .amount(eggs)
                 .name(ChatColor.LIGHT_PURPLE + "NPC Skin Changer")
                 .craft());
-            getProfile(player).addNPCEggs(eggs);
+            getProfile(playerId).addNPCEggs(eggs);
         }
     }
 
