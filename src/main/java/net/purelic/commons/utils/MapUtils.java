@@ -73,6 +73,14 @@ public class MapUtils {
         return downloadMap(path);
     }
 
+    public static String downloadLobbyMap(String lobby) {
+        try {
+            return downloadMap("/Map Repository/Lobbies/" + lobby + ".zip");
+        } catch (Exception e) {
+            return downloadMap("/Map Repository/Lobbies/Default Lobby.zip");
+        }
+    }
+
     public static String downloadPublishedMap(UUID uuid, String map) {
         return downloadMap(uuid, map, "Published");
     }
@@ -180,9 +188,9 @@ public class MapUtils {
         saveMap(map, uuid, "Published");
     }
 
-    public static void pushMap(String map) {
+    public static void pushMap(String map, boolean lobby) {
         String path = MAPS_PATH + "/" + map + ".zip";
-        String dest = "/Map Repository/Public/" + map + ".zip";
+        String dest = "/Map Repository/" + (lobby ? "Lobbies" : "Public") + "/" + map + ".zip";
         saveMap(map, path, dest);
     }
 

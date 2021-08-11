@@ -11,7 +11,7 @@ public class MapDownloader extends BukkitRunnable {
     private final boolean lobby;
 
     public MapDownloader(String map, boolean lobby) {
-        this(map, true, false);
+        this(map, true, lobby);
     }
 
     public MapDownloader(String map, boolean load, boolean lobby) {
@@ -22,7 +22,7 @@ public class MapDownloader extends BukkitRunnable {
 
     @Override
     public void run() {
-        String downloaded = MapUtils.downloadPublicMap(this.map);
+        String downloaded = this.lobby ? MapUtils.downloadLobbyMap(this.map) : MapUtils.downloadPublicMap(this.map);
         if (downloaded != null && this.load) TaskUtils.runAsync(new MapLoader(this.map, this.lobby));
     }
 

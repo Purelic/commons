@@ -17,15 +17,15 @@ public class MapLoader extends BukkitRunnable {
     private final boolean copy;
 
     public MapLoader(String map, boolean lobby) {
-        this(map, map, false);
+        this(map, map, lobby);
     }
 
     public MapLoader(String map, boolean copy, boolean lobby) {
-        this(map, map, copy, false);
+        this(map, map, copy, lobby);
     }
 
     public MapLoader(String map, String id, boolean lobby) {
-        this(map, id, true, false);
+        this(map, id, true, lobby);
     }
 
     public MapLoader(String map, String id, boolean copy, boolean lobby) {
@@ -44,9 +44,9 @@ public class MapLoader extends BukkitRunnable {
 
             if (this.lobby) {
                 Commons.setLobby(world);
+            } else {
+                Commons.callEvent(new MapLoadEvent(this.map, world));
             }
-
-            Commons.callEvent(new MapLoadEvent(map, world, this.lobby));
         });
     }
 

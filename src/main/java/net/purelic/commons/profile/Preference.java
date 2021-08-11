@@ -24,5 +24,6 @@ public enum Preference {
     HOTBAR_WOOL,
     HOTBAR_WOOL_BW,
     HOTBAR_WOOL_UHC,
+    LOBBY,
 
 }
