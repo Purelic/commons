@@ -27,6 +27,7 @@ import net.purelic.commons.events.CommonsReadyEvent;
 import net.purelic.commons.events.PlayerRankChangeEvent;
 import net.purelic.commons.listeners.*;
 import net.purelic.commons.modules.NPCModule;
+import net.purelic.commons.profile.Preference;
 import net.purelic.commons.profile.Profile;
 import net.purelic.commons.profile.Rank;
 import net.purelic.commons.runnables.IdleTimer;
@@ -136,6 +137,14 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
     public static void setLobby(World world) {
         lobby = world;
         setCommonsReady();
+    }
+
+    private String getLobbyPreference() {
+        if (Commons.hasOwner()) {
+            return (String) Commons.getProfile(Commons.getOwnerId()).getPreference(Preference.LOBBY, "Default Lobby");
+        } else {
+            return "Default Lobby";
+        }
     }
 
     public static boolean isOwner(Player player) {
