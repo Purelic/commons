@@ -28,6 +28,9 @@ public class PlayerViolationCommand implements Listener {
     public void onPlayerViolationCommand(PlayerViolationCommandEvent event) {
         Player player = event.getPlayer();
         String hacks = this.getHacks(event.getHackTypes());
+        int ping = Commons.getPing(player);
+
+        if (ping > 200) return;
 
         for (Player online : Bukkit.getOnlinePlayers()) {
             Profile profile = Commons.getProfile(online);
@@ -38,7 +41,7 @@ public class PlayerViolationCommand implements Listener {
                 new ComponentBuilder("GUARDIAN  ").color(ChatColor.RED).bold(true).create()[0],
                 Fetcher.getFancyName(player),
                 new ComponentBuilder(ChatColor.GRAY + " " + ChatUtils.ARROW + ChatColor.WHITE + " " + hacks).create()[0],
-                new ComponentBuilder(" (" + Commons.getPing(player) + "ms / " + Commons.getTPS() + " TPS)").color(ChatColor.GRAY).create()[0]);
+                new ComponentBuilder(" (" + ping + "ms / " + Commons.getTPS() + " TPS)").color(ChatColor.GRAY).create()[0]);
 
             online.playSound(online.getLocation(), Sound.BLAZE_DEATH, 2F, 1F);
         }
