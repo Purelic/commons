@@ -22,7 +22,7 @@ public enum ArmorColor {
     LIGHT_PURPLE("#FF55FF"),
     OG_PURPLE("#8427FD"),
     GOLD("#FFAA00"),
-    BUHLOSSOM_PINK("#D67689", "#EDB3C2", "#E9E9E9", "#D1D1D1"),
+    BUHLOSSOM_PINK("#EDB3C2", "#E9E9E9"),
     DART_RED("#191919", "#631312", "#191919", "#631312"),
     OAF_TEAL("#016B71", "#003537", "#05F72C", "#00D561"),
     BLACK("#000000"),
