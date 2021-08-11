@@ -40,7 +40,7 @@ public class MapLoader extends BukkitRunnable {
         if (this.copy) MapUtils.copyMap(this.map, this.id);
 
         TaskUtils.run(() -> {
-            World world = (new WorldCreator(id)).generator(new NullChunkGenerator()).createWorld();
+            World world = (new WorldCreator(this.id)).generator(new NullChunkGenerator()).createWorld();
 
             if (this.lobby) {
                 Commons.setLobby(world);
