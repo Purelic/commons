@@ -21,7 +21,7 @@ public class Hologram extends YamlObject<HologramModifiers> {
     public Hologram(NPC npc) {
         super(new HashMap<>());
         this.x = npc.getX();
-        this.y = npc.getY() + 1.5;
+        this.y = npc.getY() + 0.5;
         this.z = npc.getZ();
         this.base = new Location(Commons.getLobby(), this.x, this.y, this.z);
         this.lines = new HashMap<>();
