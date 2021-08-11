@@ -74,6 +74,8 @@ public class DatabaseUtils {
                     // Name change
                     docRef.update("name", name);
                     docRef.update("name_lower", name.toLowerCase());
+                    profile.setName(name);
+                    profile.setNameLower(name.toLowerCase());
                     Commons.callEvent(new NameChangedEvent(uuid, name));
                 }
 
