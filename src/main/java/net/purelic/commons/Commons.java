@@ -284,6 +284,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
         this.register(new BanCommand());
         this.register(new DeopCommand());
         this.register(new HeadCommand());
+        this.register(new ImageCommand());
         this.register(new KickCommand());
         this.register(new OpCommand());
         this.register(new ShutdownCommand());
