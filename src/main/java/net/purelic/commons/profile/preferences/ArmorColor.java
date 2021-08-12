@@ -29,6 +29,12 @@ public enum ArmorColor {
     WHITE("#FFFFFF"),
     PASTEL_GREEN("#BAFFC9"),
     PASTEL_BLUE("#BAE1FF"),
+    SANDSTONE("#E1E1B8"),
+    DARK_LOVE("#401F59", "#61265F", "#C23B6F", "#E34275"),
+    GREEN_CAMO("#2B3D33", "#8A925E", "#C5C086", "#3B4937"),
+    RAINBOW("#FF0018", "#FFFF41", "#008018", "#0000F9"),
+    BLACK_AND_GOLD("#DAAB2D", "#DAAB2D", "#262626", "#020B13"),
+    SKY_BLUE("#419AF2", "#4FA9F2", "#6CC8F1", "#7BD8F0")
     ;
 
     private final int helmet;
