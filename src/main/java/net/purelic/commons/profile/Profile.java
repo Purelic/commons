@@ -260,7 +260,7 @@ public class Profile {
 
         if (!this.isNicked()) {
             for (Rank rank : this.ranks) {
-                if (staffFlairAdded && (rank.isStaff() || rank == Rank.PREMIUM)) continue;
+                if (staffFlairAdded && (rank.isStaff() || rank == Rank.PREMIUM || rank == Rank.CREATOR)) continue;
                 if (creatorFlairAdded && rank == Rank.PREMIUM) continue;
 
                 if (rank == Rank.PREMIUM && this.premiumSubscribed) {
