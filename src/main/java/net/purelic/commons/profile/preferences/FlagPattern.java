@@ -6,6 +6,8 @@ import org.bukkit.block.banner.PatternType;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum FlagPattern {
 
@@ -200,6 +202,14 @@ public enum FlagPattern {
 
     public List<Pattern> getPatterns() {
         return this.patterns;
+    }
+
+    public static List<String> getNames() {
+        return Stream.of(FlagPattern.values()).map(Enum::name).collect(Collectors.toList());
+    }
+
+    public static boolean contains(String value) {
+        return FlagPattern.getNames().contains(value.toUpperCase());
     }
 
 }
