@@ -192,6 +192,17 @@ public enum FlagPattern {
         new Pattern(DyeColor.WHITE, PatternType.CURLY_BORDER),
         new Pattern(DyeColor.WHITE, PatternType.SQUARE_BOTTOM_RIGHT)
     ),
+    WARDEN(
+        new Pattern(DyeColor.BLACK, PatternType.BASE),
+        new Pattern(DyeColor.CYAN, PatternType.STRIPE_SMALL),
+        new Pattern(DyeColor.BLACK, PatternType.CURLY_BORDER),
+        new Pattern(DyeColor.GRAY, PatternType.FLOWER),
+        new Pattern(DyeColor.BLACK, PatternType.TRIANGLE_TOP),
+        new Pattern(DyeColor.CYAN, PatternType.SKULL),
+        new Pattern(DyeColor.BLACK, PatternType.CREEPER),
+        new Pattern(DyeColor.CYAN, PatternType.SKULL),
+        new Pattern(DyeColor.BLACK, PatternType.SKULL)
+    ),
     ;
 
     private final List<Pattern> patterns;
