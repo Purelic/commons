@@ -86,7 +86,7 @@ public class PlayerInteract implements Listener {
             if (block instanceof Skull) {
                 Skull skull = (Skull) block;
                 String owner = skull.getOwner();
-                CommandUtils.sendAlertMessage(player, "That's the head of " + ChatColor.DARK_AQUA + owner);
+                if (owner != null) CommandUtils.sendAlertMessage(player, "That's the head of " + ChatColor.DARK_AQUA + owner);
             }
         }
 
