@@ -121,11 +121,13 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
         commonsReady = true;
         if (idleTimer > 0) TaskUtils.runLater(new IdleTimer(), idleTimer);
         callEvent(new CommonsReadyEvent());
+        if (serverReady) DatabaseUtils.setServerOnline();
     }
 
     public static void setServerReady() {
-        DatabaseUtils.setServerOnline();
+        if (serverReady) return;
         serverReady = true;
+        if (commonsReady) DatabaseUtils.setServerOnline();
     }
 
     public static String getRoot() {
