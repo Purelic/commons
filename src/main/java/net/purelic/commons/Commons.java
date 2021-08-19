@@ -140,7 +140,6 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
 
     public static void setLobby(World world) {
         lobby = world;
-        setCommonsReady();
     }
 
     public static String getLobbyPreference() {
