@@ -31,7 +31,7 @@ public class NPC extends YamlObject<NPCModifiers> {
         this.y = this.get(NPCModifiers.Y);
         this.z = this.get(NPCModifiers.Z);
         this.yaw = this.get(NPCModifiers.YAW);
-        this.skin = this.get(NPCModifiers.SKIN);
+        this.skin = Commons.getPlugin().getConfig().getString("npc." + this.id, this.get(NPCModifiers.SKIN));
         this.hologram = new Hologram(this);
     }
 

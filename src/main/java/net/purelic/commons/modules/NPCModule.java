@@ -108,6 +108,10 @@ public class NPCModule implements Module {
             npc.remove(true);
             npc.create();
 
+            // update latest skin values per npc
+            Commons.getPlugin().getConfig().set("npc." + npc.getId(), NickUtils.getRealName(player));
+            Commons.getPlugin().saveConfig();
+
             return;
         }
 
