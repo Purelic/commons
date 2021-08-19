@@ -16,7 +16,7 @@ public class PlayerPreLogin implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event) {
-        if (!Commons.isReady() || Commons.getLobby() == null) {
+        if (!Commons.isReady() || Commons.getLobby() == null || Commons.getLobby().getSpawnLocation() == null) {
             event.disallow(
                 AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
                 ChatColor.RED + "The server is still starting up! Trying joining again in a few seconds.");

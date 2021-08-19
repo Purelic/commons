@@ -113,7 +113,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
     }
 
     public static boolean isReady() {
-        return serverReady;
+        return serverReady && commonsReady;
     }
 
     private static void setCommonsReady() {
