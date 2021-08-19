@@ -116,7 +116,8 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
         return serverReady && commonsReady;
     }
 
-    private static void setCommonsReady() {
+    public static void setCommonsReady() {
+        if (commonsReady) return;
         commonsReady = true;
         if (idleTimer > 0) TaskUtils.runLater(new IdleTimer(), idleTimer);
         callEvent(new CommonsReadyEvent());

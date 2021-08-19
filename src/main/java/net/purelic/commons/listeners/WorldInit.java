@@ -1,5 +1,6 @@
 package net.purelic.commons.listeners;
 
+import net.purelic.commons.Commons;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
@@ -22,6 +23,10 @@ public class WorldInit implements Listener {
         world.setPVP(true);
         world.setStorm(false);
         world.setThundering(false);
+
+        if (world.getName().toLowerCase().contains("hub") || world.getName().toLowerCase().contains("lobby")) {
+           Commons.setCommonsReady();
+        }
     }
 
 }
