@@ -180,17 +180,14 @@ public class ChatUtils {
         LAST_MESSAGES.put(uuid, message);
         LAST_SENT.put(uuid, System.currentTimeMillis());
 
-        BaseComponent[] fancyMessage = getFancyChatMessage(player, prefix, message, audience);
-        for (Player online : audience) {
-            online.sendMessage(new TextComponent(fancyMessage).toString());
-        }
+        for (Player online : audience) online.sendMessage(getFancyChatMessage(player, prefix, message, audience, online));
     }
 
-    private static BaseComponent[] getFancyChatMessage(Player player, BaseComponent[] prefix, String message, Collection<? extends Player> audience) {
+    private static BaseComponent[] getFancyChatMessage(Player player, BaseComponent[] prefix, String message, Collection<? extends Player> audience, Player viewer) {
         // Censor words in message
         message = message.replaceAll(censorRegex, "*");
 
-        BaseComponent[] fancyName = new BaseComponent[]{Fetcher.getFancyName(player)};
+        BaseComponent[] fancyName = new BaseComponent[]{Fetcher.getFancyName(player, viewer)};
         ComponentBuilder fancyMessage = new ComponentBuilder(": ");
         String[] split = message.split(" ");
 

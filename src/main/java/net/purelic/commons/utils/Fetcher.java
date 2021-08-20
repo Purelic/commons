@@ -127,7 +127,7 @@ public class Fetcher {
     public static TextComponent getFancyName(Player player, Player viewer) {
         TextComponent name = getFancyName(player.getUniqueId());
 
-        if (Commons.getProfile(viewer).isStaff() && NickUtils.isNicked(player)) {
+        if (NickUtils.canSeeRealName(player, viewer) && NickUtils.isNicked(player)) {
             // text is actually empty here, so this prepends a struck out name before the nick
             name.setText("" + ChatColor.GRAY + ChatColor.STRIKETHROUGH +
                 NickUtils.getRealName(player) + " ");

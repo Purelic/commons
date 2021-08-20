@@ -52,6 +52,10 @@ public class NickUtils {
         return isNicked(player) ? displayed.replace(getRealName(player), getNick(player)) : displayed;
     }
 
+    public static boolean canSeeRealName(Player nicked, Player viewer) {
+        return nicked == viewer || Commons.getProfile(viewer).isStaff();
+    }
+
     public static void setNick(Player player, String nick) {
         if (NickUtils.isNicked(player) && nick != null) {
             CommandUtils.sendErrorMessage(player, "You are already nicked! To remove your nick use /unnick");
