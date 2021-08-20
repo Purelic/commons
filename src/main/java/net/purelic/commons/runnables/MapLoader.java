@@ -41,12 +41,7 @@ public class MapLoader extends BukkitRunnable {
 
         TaskUtils.run(() -> {
             World world = (new WorldCreator(this.id)).generator(new NullChunkGenerator()).createWorld();
-
-            if (this.lobby) {
-                Commons.setLobby(world);
-            } else {
-                Commons.callEvent(new MapLoadEvent(this.map, world));
-            }
+            if (!this.lobby) Commons.callEvent(new MapLoadEvent(this.map, world));
         });
     }
 

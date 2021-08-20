@@ -25,7 +25,8 @@ public class WorldInit implements Listener {
         world.setThundering(false);
 
         if (world.getName().toLowerCase().contains("hub") || world.getName().toLowerCase().contains("lobby")) {
-           Commons.setCommonsReady();
+            Commons.setLobby(world);
+            Commons.setCommonsReady();
         }
     }
 
