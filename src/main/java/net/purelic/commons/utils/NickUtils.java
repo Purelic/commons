@@ -187,9 +187,13 @@ public class NickUtils {
 
         // Update the changes for other players
         for (Player online : Bukkit.getOnlinePlayers()) {
-            CraftPlayer cp = ((CraftPlayer) online);
-            cp.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(player.getEntityId()));
-            cp.getHandle().playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(craftPlayer.getHandle()));
+            // Sending these packets to the nicked player if they're on 1.7 can cause glitches.
+            // The player will still be nicked to everyone else, just not themselves.
+            if (online == player && VersionUtils.isLegacy(player)) {
+                CraftPlayer cp = ((CraftPlayer) online);
+                cp.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(player.getEntityId()));
+                cp.getHandle().playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(craftPlayer.getHandle()));
+            }
 
             online.hidePlayer(player);
             online.showPlayer(player);
