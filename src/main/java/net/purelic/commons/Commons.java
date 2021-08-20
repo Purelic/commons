@@ -12,10 +12,7 @@ import net.purelic.commons.analytics.Analytics;
 import net.purelic.commons.commands.admin.DeathEffectCommand;
 import net.purelic.commons.commands.admin.DemoteCommand;
 import net.purelic.commons.commands.admin.PromoteCommand;
-import net.purelic.commons.commands.nick.ForceNickCommand;
-import net.purelic.commons.commands.nick.NickCommand;
-import net.purelic.commons.commands.nick.NicksCommand;
-import net.purelic.commons.commands.nick.UnnickCommand;
+import net.purelic.commons.commands.nick.*;
 import net.purelic.commons.commands.npc.NPCReloadCommand;
 import net.purelic.commons.commands.op.*;
 import net.purelic.commons.commands.parsers.CustomCommand;
@@ -286,6 +283,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
 
         // Nick Commands
         this.register(new ForceNickCommand());
+        this.register(new ForceUnnickCommand());
         this.register(new NickCommand());
         this.register(new NicksCommand());
         this.register(new UnnickCommand());
