@@ -10,6 +10,7 @@ import com.google.firebase.cloud.FirestoreClient;
 import net.purelic.commons.Commons;
 import net.purelic.commons.events.NameChangedEvent;
 import net.purelic.commons.events.ProfileLoadedEvent;
+import net.purelic.commons.events.ServerReadyEvent;
 import net.purelic.commons.profile.Profile;
 import net.purelic.commons.utils.constants.ServerStatus;
 import org.bukkit.Bukkit;
@@ -252,6 +253,8 @@ public class DatabaseUtils {
     }
 
     public static void setServerOnline() {
+        Commons.callEvent(new ServerReadyEvent());
+
         if (serverDoc != null) {
             Map<String, Object> data = new HashMap<>();
             data.put("online", true);
