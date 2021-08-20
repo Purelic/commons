@@ -197,6 +197,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
     private void registerListeners() {
         this.register(new NameChange());
         this.register(new OpStatusChange());
+        this.register(new PlayerChat());
         this.register(new PlayerInteract());
         this.register(new PlayerJoin());
         this.register(new PlayerPreLogin());
