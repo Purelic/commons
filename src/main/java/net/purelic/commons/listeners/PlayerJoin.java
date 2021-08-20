@@ -2,8 +2,6 @@ package net.purelic.commons.listeners;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.purelic.commons.Commons;
 import net.purelic.commons.events.OpStatusChangeEvent;
 import net.purelic.commons.profile.Profile;
@@ -30,15 +28,12 @@ public class PlayerJoin implements Listener {
 
         VersionUtils.Protocol protocol = VersionUtils.getProtocol(player);
 
-        Bukkit.broadcast(
-            Fetcher.getFancyName(player),
-            new TextComponent(ChatColor.GRAY + " joined "),
-            new ComponentBuilder("(" + protocol.getLabel() + ")")
-                .color(ChatColor.GRAY)
-                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                    new ComponentBuilder(protocol.getFullLabel() + " (" + protocol.value() + ")")
-                        .create()))
-                .create()[0]);
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            online.sendMessage(
+                Fetcher.getFancyName(player, online),
+                new ComponentBuilder(" joined (" + protocol.getLabel() + ")").color(ChatColor.GRAY).create()[0]
+            );
+        }
 
         if (Commons.getProfile(player).isStaff() && NickUtils.getNickedPlayers().size() > 0) {
             Bukkit.dispatchCommand(player, "nicks");
