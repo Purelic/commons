@@ -28,6 +28,7 @@ import net.purelic.commons.modules.NPCModule;
 import net.purelic.commons.profile.Preference;
 import net.purelic.commons.profile.Profile;
 import net.purelic.commons.profile.Rank;
+import net.purelic.commons.profile.preferences.ChatChannel;
 import net.purelic.commons.runnables.IdleTimer;
 import net.purelic.commons.utils.*;
 import net.purelic.commons.utils.packets.Hologram;
@@ -435,6 +436,10 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
                 .name(ChatColor.LIGHT_PURPLE + "NPC Skin Changer")
                 .craft());
             getProfile(playerId).addNPCEggs(eggs);
+        } else if (subChannel.equals("UpdateChatChannel")) {
+            UUID playerId = UUID.fromString(in.readUTF());
+            ChatChannel chatChannel = ChatChannel.valueOf(in.readUTF());
+            getProfile(playerId).setChatChannel(chatChannel);
         }
     }
 
