@@ -5,14 +5,20 @@ import com.mojang.authlib.properties.Property;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
 public class PacketUtils {
+
+    public static void sendPackets(Packet<?>... packets) {
+        for (Player player : Bukkit.getOnlinePlayers()) sendPackets(player, packets);
+    }
 
     public static void sendPackets(Player player, Packet<?>... packets) {
         PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
@@ -62,6 +68,45 @@ public class PacketUtils {
         // stand.n(true); // marker
 
         return stand;
+    }
+
+    public static void itemCrack(Location location, Material material) {
+        itemCrack(location, material, 10);
+    }
+
+    public static void itemCrack(Location location, Material material, int amount) {
+        itemCrack(location, material, 0.3F, amount);
+    }
+
+    public static void itemCrack(Location location, Material material, float offset, int amount) {
+        itemCrack(location, material, offset, 0.1F, amount);
+    }
+
+    public static void itemCrack(Location location, Material material, float offset, float speed, int amount) {
+        itemCrack(location, material, offset, offset, offset, speed, amount);
+    }
+
+    public static void itemCrack(Location location, Material material, float offsetX, float offsetY, float offsetZ, float speed, int amount) {
+        itemCrack(location, new ItemStack(material), offsetX, offsetY, offsetZ, speed, amount);
+    }
+
+    public static void itemCrack(Location location, ItemStack item, float offsetX, float offsetY, float offsetZ, float speed, int amount) {
+        PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(
+            EnumParticle.ITEM_CRACK,
+            false,
+            (float) location.getX(),
+            (float) location.getY(),
+            (float) location.getZ(),
+            offsetX,
+            offsetY,
+            offsetZ,
+            speed,
+            amount,
+            item.getTypeId(),
+            item.getData().getData()
+        );
+
+        sendPackets(packet);
     }
 
 }
