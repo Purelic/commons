@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
-public class NameChangeEvent implements Listener {
+public class NameChange implements Listener {
 
     @EventHandler
     public void onNameChange(NameChangedEvent event) {
