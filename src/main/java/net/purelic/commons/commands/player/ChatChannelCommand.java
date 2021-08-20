@@ -22,6 +22,11 @@ public class ChatChannelCommand implements CustomCommand {
                 Player player = (Player) c.getSender();
                 ChatChannel channel = c.get("channel");
 
+                if (channel == ChatChannel.STAFF && !Commons.getProfile(player).isStaff()) {
+                    CommandUtils.sendErrorMessage(player, "You can't use this chat channel!");
+                    return;
+                }
+
                 DatabaseUtils.update(Commons.getProfile(player), "preferences.chat_channel", channel.name());
                 CommandUtils.sendSuccessMessage(player, "You've set your chat channel to " + channel.name().toLowerCase() + "!");
             });
