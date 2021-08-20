@@ -7,6 +7,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.purelic.commons.profile.preferences.ChatChannel;
 import net.purelic.commons.utils.CommandUtils;
 import net.purelic.commons.utils.DatabaseUtils;
 import net.purelic.commons.utils.NickUtils;
@@ -119,6 +120,16 @@ public class Profile {
     public Object getPreference(Preference preference, Object defaultValue) {
         if (!this.preferences.containsKey(preference) || this.preferences.get(preference) == null) return defaultValue;
         else return this.preferences.get(preference);
+    }
+
+    public ChatChannel getChatChannel() {
+        String preference = (String) this.getPreference(Preference.CHAT_CHANNEL, ChatChannel.ALL.name());
+
+        if (ChatChannel.contains(preference)) {
+            return ChatChannel.valueOf(preference.toUpperCase());
+        } else {
+            return ChatChannel.ALL;
+        }
     }
 
     public List<String> getRanks() {

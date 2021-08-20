@@ -19,10 +19,7 @@ import net.purelic.commons.commands.nick.UnnickCommand;
 import net.purelic.commons.commands.npc.NPCReloadCommand;
 import net.purelic.commons.commands.op.*;
 import net.purelic.commons.commands.parsers.CustomCommand;
-import net.purelic.commons.commands.player.MacroCommand;
-import net.purelic.commons.commands.player.MeCommand;
-import net.purelic.commons.commands.player.ShrugCommand;
-import net.purelic.commons.commands.player.VersionCommand;
+import net.purelic.commons.commands.player.*;
 import net.purelic.commons.commands.whitelist.*;
 import net.purelic.commons.events.CommonsReadyEvent;
 import net.purelic.commons.events.PlayerRankChangeEvent;
@@ -306,6 +303,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
 
         // Player Commands
         MacroCommand.registerMacroCommands();
+        this.register(new ChatChannelCommand());
         this.register(new MeCommand());
         this.register(new ShrugCommand());
         this.register(new VersionCommand());
