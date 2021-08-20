@@ -181,7 +181,9 @@ public class ChatUtils {
         LAST_SENT.put(uuid, System.currentTimeMillis());
 
         BaseComponent[] fancyMessage = getFancyChatMessage(player, prefix, message, audience);
-        for (Player online : audience) online.sendMessage(fancyMessage);
+        for (Player online : audience) {
+            online.sendMessage(new TextComponent(fancyMessage).toString());
+        }
     }
 
     private static BaseComponent[] getFancyChatMessage(Player player, BaseComponent[] prefix, String message, Collection<? extends Player> audience) {
