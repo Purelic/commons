@@ -9,6 +9,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import net.md_5.bungee.api.ChatColor;
 import net.purelic.commons.analytics.Analytics;
+import net.purelic.commons.commands.admin.DeathEffectCommand;
 import net.purelic.commons.commands.admin.DemoteCommand;
 import net.purelic.commons.commands.admin.PromoteCommand;
 import net.purelic.commons.commands.nick.ForceNickCommand;
@@ -279,6 +280,7 @@ public class Commons extends JavaPlugin implements Listener, PluginMessageListen
         this.registerCommandManager();
 
         // Admin Commands
+        this.register(new DeathEffectCommand());
         this.register(new DemoteCommand());
         this.register(new PromoteCommand());
 
