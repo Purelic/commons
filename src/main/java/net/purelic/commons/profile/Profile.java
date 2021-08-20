@@ -122,6 +122,11 @@ public class Profile {
         else return this.preferences.get(preference);
     }
 
+    public void setChatChannel(ChatChannel channel) {
+        this.updatePreference(Preference.CHAT_CHANNEL, channel.name());
+        DatabaseUtils.update(this, "preferences.chat_channel", channel.name());
+    }
+
     public ChatChannel getChatChannel() {
         String preference = (String) this.getPreference(Preference.CHAT_CHANNEL, ChatChannel.ALL.name());
 
