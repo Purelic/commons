@@ -17,11 +17,11 @@ public class DeathEffectCommand implements CustomCommand {
             .senderType(Player.class)
             .permission(Permission.isAdmin())
             .argument(EnumArgument.of(DeathEffect.class, "effect"))
-            .handler(c -> {
+            .handler(context -> mgr.taskRecipe().begin(context).synchronous(c -> {
                 Player player = (Player) c.getSender();
                 DeathEffect effect = c.get("effect");
                 effect.play(player);
-            });
+            }).execute());
     }
 
 }
