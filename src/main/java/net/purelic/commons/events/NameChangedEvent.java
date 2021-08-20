@@ -17,7 +17,7 @@ public class NameChangedEvent extends Event {
         this.name = name;
     }
 
-    public UUID geId() {
+    public UUID getId() {
         return this.uuid;
     }
 
