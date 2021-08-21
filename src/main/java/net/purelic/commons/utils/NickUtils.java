@@ -188,6 +188,7 @@ public class NickUtils {
         }
 
         // Update the changes for the viewer
+        // ((CraftPlayer) viewer).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, craftPlayer.getHandle()));
 
         // Sending these packets to the nicked player if they're on 1.7 can cause glitches.
         // The player will still be nicked to everyone else, just not themselves.
