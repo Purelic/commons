@@ -107,7 +107,7 @@ public class Fetcher {
             cache(uuid, user.getName());
             return uuid;
         } catch (IOException e) {
-            e.printStackTrace();
+            // user with that name not found
             return null;
         }
     }
