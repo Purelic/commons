@@ -26,8 +26,11 @@ public class PlayerChat implements Listener {
                 CommandUtils.sendErrorMessage(player, "You can no longer use this chat channel! Your chat channel has been reset to all.");
                 profile.setChatChannel(channel);
             }
+
+            event.setCancelled(true);
         } else if (channel == ChatChannel.PARTY) {
             Commons.sendSpringMessage(player, "PartyChat", message);
+            event.setCancelled(true);
         }
     }
 
