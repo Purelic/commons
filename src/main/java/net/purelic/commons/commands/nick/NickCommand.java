@@ -2,8 +2,8 @@ package net.purelic.commons.commands.nick;
 
 import cloud.commandframework.Command;
 import cloud.commandframework.bukkit.BukkitCommandManager;
+import net.purelic.commons.Commons;
 import net.purelic.commons.commands.parsers.CustomCommand;
-import net.purelic.commons.commands.parsers.Permission;
 import net.purelic.commons.utils.CommandUtils;
 import net.purelic.commons.utils.NickUtils;
 import org.bukkit.command.CommandSender;
@@ -15,9 +15,13 @@ public class NickCommand implements CustomCommand {
     public Command.Builder<CommandSender> getCommandBuilder(BukkitCommandManager<CommandSender> mgr) {
         return mgr.commandBuilder("nick")
             .senderType(Player.class)
-            .permission(Permission.isStaff())
             .handler(c -> {
                 Player player = (Player) c.getSender();
+
+                if (!Commons.getProfile(player).isDonator(true)) {
+                    CommandUtils.sendErrorMessage(player, "Only Premium players can use /nick! Consider donating to support the server at purelic.net/donate");
+                    return;
+                }
 
                 CommandUtils.sendAlertMessage(player, "Fetching a nickname...");
 

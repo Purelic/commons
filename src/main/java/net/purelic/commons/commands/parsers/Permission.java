@@ -69,7 +69,7 @@ public class Permission {
 
     @Deprecated
     public static PredicatePermission<CommandSender> isPremium(boolean opEnabled) {
-        return of(opEnabled, Rank.PREMIUM, Rank.CREATOR, Rank.MAP_DEVELOPER, Rank.MODERATOR, Rank.HELPER);
+        return of(opEnabled, Rank.PREMIUM, Rank.CREATOR, Rank.MAP_DEVELOPER, Rank.MODERATOR, Rank.HELPER, Rank.DEVELOPER);
     }
 
     public static boolean notPremium(@NonNull CommandContext<CommandSender> context) {
