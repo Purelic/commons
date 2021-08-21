@@ -17,7 +17,7 @@ public class PlayerChat implements Listener {
         Player player = event.getPlayer();
         String message = event.getMessage();
         Profile profile = Commons.getProfile(player);
-        ChatChannel channel = Commons.getProfile(player).getChatChannel();
+        ChatChannel channel = profile.getChatChannel();
 
         if (channel == ChatChannel.STAFF) {
             if (profile.isStaff()) {

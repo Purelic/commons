@@ -7,7 +7,6 @@ import net.purelic.commons.Commons;
 import net.purelic.commons.commands.parsers.CustomCommand;
 import net.purelic.commons.profile.preferences.ChatChannel;
 import net.purelic.commons.utils.CommandUtils;
-import net.purelic.commons.utils.DatabaseUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -27,7 +26,7 @@ public class ChatChannelCommand implements CustomCommand {
                     return;
                 }
 
-                DatabaseUtils.update(Commons.getProfile(player), "preferences.chat_channel", channel.name());
+                Commons.getProfile(player).setChatChannel(channel);
                 CommandUtils.sendSuccessMessage(player, "You've set your chat channel to " + channel.name().toLowerCase() + "!");
             });
     }
