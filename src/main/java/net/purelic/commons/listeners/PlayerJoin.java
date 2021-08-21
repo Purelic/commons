@@ -48,15 +48,25 @@ public class PlayerJoin implements Listener {
         // Force unnick non-donors on join if they're nicked
         if (NickUtils.isNicked(player) && !profile.isStaff() && !profile.isDonator()) {
             PlayerUtils.performCommand(player, "unnick");
+
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                online.hidePlayer(player);
+                online.showPlayer(player);
+            }
             return;
         }
 
-        // Disguise the player if nicked
-        if (!NickUtils.disguisePlayer(player)) {
-            Bukkit.getOnlinePlayers().forEach(online -> {
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (NickUtils.isNicked(online)) {
+                NickUtils.disguisePlayer(online, player);
+            }
+
+            if (profile.isNicked()) {
+                NickUtils.disguisePlayer(player, online);
+            } else {
                 online.hidePlayer(player);
                 online.showPlayer(player);
-            });
+            }
         }
     }
 

@@ -152,10 +152,7 @@ public class NickUtils {
     }
 
     // Returns if the player was disguised
-    public static boolean disguisePlayer(Player player) {
-        // Return if the player is not nicked
-        if (!isNicked(player)) return false;
-
+    public static boolean disguisePlayer(Player player, Player viewer) {
         // Get the player's nick
         String nick = getNick(player);
 
@@ -173,7 +170,7 @@ public class NickUtils {
 
         // Create the nicked entity human
         EntityHuman entityHuman = craftPlayer.getHandle();
-        craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, craftPlayer.getHandle()));
+        ((CraftPlayer) viewer).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, craftPlayer.getHandle()));
 
         // Update display names
         player.setDisplayName(player.getDisplayName());
@@ -190,19 +187,18 @@ public class NickUtils {
             return false;
         }
 
-        // Update the changes for other players
-        for (Player online : Bukkit.getOnlinePlayers()) {
-            // Sending these packets to the nicked player if they're on 1.7 can cause glitches.
-            // The player will still be nicked to everyone else, just not themselves.
-            if (!(online == player && VersionUtils.isLegacy(player))) {
-                CraftPlayer cp = ((CraftPlayer) online);
-                cp.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(player.getEntityId()));
-                cp.getHandle().playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(craftPlayer.getHandle()));
-            }
+        // Update the changes for the viewer
 
-            online.hidePlayer(player);
-            online.showPlayer(player);
+        // Sending these packets to the nicked player if they're on 1.7 can cause glitches.
+        // The player will still be nicked to everyone else, just not themselves.
+        if (!(viewer == player && VersionUtils.isLegacy(player))) {
+            CraftPlayer cp = ((CraftPlayer) viewer);
+            cp.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(player.getEntityId()));
+            cp.getHandle().playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(craftPlayer.getHandle()));
         }
+
+        viewer.hidePlayer(player);
+        viewer.showPlayer(player);
 
         return true;
     }
