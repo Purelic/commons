@@ -137,6 +137,10 @@ public class Profile {
         }
     }
 
+    public List<Rank> getPlayerRanks() {
+        return this.ranks;
+    }
+
     public List<String> getRanks() {
         List<String> ranks = new ArrayList<>();
 

@@ -5,6 +5,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.purelic.commons.Commons;
 import net.purelic.commons.events.PlayerRankChangeEvent;
 import net.purelic.commons.profile.Profile;
+import net.purelic.commons.profile.Rank;
 import net.purelic.commons.utils.NickUtils;
 import net.purelic.commons.utils.ServerUtils;
 import net.purelic.commons.utils.VersionUtils;
@@ -17,6 +18,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.util.List;
+
 public class BasicScoreboardModule implements Module {
 
     private final Scoreboard board;
@@ -28,7 +31,7 @@ public class BasicScoreboardModule implements Module {
     private void setScoreboard(Player player) {
         this.updateTeam(player, Commons.getProfile(player));
         this.setTabHeaderFooter(player);
-        player.setDisplayName(ChatColor.AQUA + NickUtils.getRealName(player));
+        player.setDisplayName(this.getColor(player) + NickUtils.getRealName(player));
         player.setScoreboard(this.board);
     }
 
@@ -43,7 +46,7 @@ public class BasicScoreboardModule implements Module {
 
     private void updateTeam(Player player, Profile profile) {
         this.addTeam(player); // creates a scoreboard team (if one doesn't already exist)
-        this.board.getTeam(player.getName()).setPrefix(profile.getFlairs(true) + ChatColor.AQUA);
+        this.board.getTeam(player.getName()).setPrefix(profile.getFlairs(true) + this.getColor(player));
     }
 
     private void removeTeam(Player player) {
@@ -63,6 +66,11 @@ public class BasicScoreboardModule implements Module {
         tabFooter.setColor(ChatColor.GRAY);
 
         player.setPlayerListHeaderFooter(tabHeader, tabFooter);
+    }
+
+    private ChatColor getColor(Player player) {
+        List<Rank> ranks = Commons.getProfile(player).getPlayerRanks();
+        return ranks.size() == 0 ? ChatColor.AQUA : ranks.get(0).getColor();
     }
 
     @EventHandler (priority = EventPriority.LOW)
