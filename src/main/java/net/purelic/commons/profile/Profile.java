@@ -49,6 +49,7 @@ public class Profile {
     private long premiumPurchased;
     private long premiumGifted;
     private long premiumReceived;
+    private boolean vanished;
 
     public Profile() {
         this.ranks = new ArrayList<>();
@@ -76,6 +77,7 @@ public class Profile {
         this.premiumPurchased = 0L;
         this.premiumGifted = 0L;
         this.premiumReceived = 0L;
+        this.vanished = false;
     }
 
     public UUID getUniqueId() {
@@ -552,7 +554,7 @@ public class Profile {
 
     @PropertyName("premium_expiration")
     public Timestamp getPremiumExpiration() {
-        return premiumExpiration;
+        return this.premiumExpiration;
     }
 
     @PropertyName("premium_subscribed")
@@ -562,7 +564,7 @@ public class Profile {
 
     @PropertyName("premium_subscribed")
     public boolean isPremiumSubscribed() {
-        return premiumSubscribed;
+        return this.premiumSubscribed;
     }
 
     @PropertyName("premium_purchased")
@@ -572,7 +574,7 @@ public class Profile {
 
     @PropertyName("premium_purchased")
     public long getPremiumPurchased() {
-        return premiumPurchased;
+        return this.premiumPurchased;
     }
 
     @PropertyName("premium_gifted")
@@ -582,7 +584,7 @@ public class Profile {
 
     @PropertyName("premium_gifted")
     public long getPremiumGifted() {
-        return premiumGifted;
+        return this.premiumGifted;
     }
 
     @PropertyName("premium_received")
@@ -593,6 +595,15 @@ public class Profile {
     @PropertyName("premium_received")
     public long getPremiumReceived() {
         return this.premiumReceived;
+    }
+
+    @PropertyName("vanished")
+    public boolean isVanished() {
+        return this.vanished;
+    }
+
+    public void setVanished(boolean vanished) {
+        this.vanished = vanished;
     }
 
 }
