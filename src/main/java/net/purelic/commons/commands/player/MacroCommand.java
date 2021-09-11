@@ -10,6 +10,7 @@ import net.purelic.commons.commands.parsers.CustomCommand;
 import net.purelic.commons.commands.parsers.Permission;
 import net.purelic.commons.commands.parsers.PlayerArgument;
 import net.purelic.commons.profile.Rank;
+import net.purelic.commons.utils.ChatUtils;
 import net.purelic.commons.utils.Fetcher;
 import net.purelic.commons.utils.text.ClickAction;
 import net.purelic.commons.utils.text.ListBuilder;
@@ -118,12 +119,10 @@ public class MacroCommand {
 
             message += "!";
 
-            BaseComponent[] fancyName = new BaseComponent[] { Fetcher.getFancyName(sender) };
-
             BaseComponent[] fancyMessage = new ComponentBuilder(": ")
                 .append(message).italic(true)
-                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("/" + this.command + " Macro").create()))
-                .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/" + this.command))
+                .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(this.command + " Macro").create()))
+                .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, this.command))
                 .create();
 
             UUID uuid = sender.getUniqueId();
@@ -135,8 +134,15 @@ public class MacroCommand {
                 if (sameMacro && timeLeft > 0) block = true;
             }
 
-            if (block) sender.sendMessage((BaseComponent[]) ArrayUtils.addAll(fancyName, fancyMessage));
-            else Bukkit.broadcast((BaseComponent[]) ArrayUtils.addAll(fancyName, fancyMessage));
+            if (block) {
+                BaseComponent[] fancyName = new BaseComponent[] { Fetcher.getFancyName(sender, sender) };
+                sender.sendMessage((BaseComponent[]) ArrayUtils.addAll(fancyName, fancyMessage));
+            } else {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    BaseComponent[] fancyName = new BaseComponent[] { Fetcher.getFancyName(sender, player) };
+                    ChatUtils.sendMessage(player, (BaseComponent[]) ArrayUtils.addAll(fancyName, fancyMessage));
+                }
+            }
 
             LAST_MACRO.put(uuid, this);
             LAST_SENT.put(uuid, System.currentTimeMillis());
