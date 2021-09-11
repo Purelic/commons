@@ -70,7 +70,7 @@ public class BasicScoreboardModule implements Module {
 
     private ChatColor getColor(Player player) {
         List<Rank> ranks = Commons.getProfile(player).getPlayerRanks();
-        return ranks.size() == 0 ? ChatColor.AQUA : ranks.get(0).getColor();
+        return ranks.size() == 0 || NickUtils.isNicked(player) ? ChatColor.AQUA : ranks.get(0).getColor();
     }
 
     @EventHandler (priority = EventPriority.LOW)
