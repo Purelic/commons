@@ -54,6 +54,7 @@ public class MacroCommand {
         SUP("What's sup", false, true),
         TY("Thank you", true, false),
         WP("Well played", true, false),
+        YH("Yee haw", false, false),
         YW("You're welcome", true, false),
         ;
 
