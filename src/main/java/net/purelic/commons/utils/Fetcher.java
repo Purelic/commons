@@ -41,7 +41,7 @@ public class Fetcher {
 
         Player online = Bukkit.getPlayer(uuid);
         if (online != null) {
-            String name = online.getName();
+            String name = NickUtils.getRealName(online);
             cache(uuid, name);
             return name;
         }
