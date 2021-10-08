@@ -2,7 +2,6 @@ package net.purelic.commons.utils.packets;
 
 import net.purelic.commons.Commons;
 import net.purelic.commons.utils.Fetcher;
-import net.purelic.commons.utils.NickUtils;
 import net.purelic.commons.utils.YamlObject;
 import net.purelic.commons.utils.packets.constants.NPCModifiers;
 import org.bukkit.Bukkit;
@@ -64,7 +63,7 @@ public class NPC extends YamlObject<NPCModifiers> {
     }
 
     public void setSkin(Player player) {
-        this.skin = NickUtils.getRealName(player);
+        this.skin = player.getUniqueId().toString();
     }
 
     public int getEntityId() {
